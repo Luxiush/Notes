@@ -83,11 +83,11 @@ $ git merge <branchName>                # 合并指定分支到当前分支
 
 |      fast-forward合并      |           三方合并            |
 | :----------------------: | :-----------------------: |
-| ![](./img/merge-lin.svg) | ![](./img/merge-3way.svg) |
+| ![](./img/merge-lin.png) | ![](./img/merge-3way.png) |
 
 
 ### git diff
-![](./img/diff.svg)
+![](./img/diff.png)
 
 ---
 ## 文件操作
