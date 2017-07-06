@@ -136,11 +136,12 @@ $ git remote rm <主机名>            # 删除远程主机
 > “‘储藏”“可以获取你工作目录的中间状态——也就是你修改过的被追踪的文件和暂存的变更——并将它保存到一个未完结变更的堆栈中，随时可以重新应用。
 
 ```shell
-$ git stash                     # 保存当前的工作进度，分别对Index和Workspae的状态进行保存
-$ git stash list                # 查看现有储藏
-$ git stash apply [stash@{<i>}] # 应用指定的储藏,如果不指定则应用最后stash储藏
-$ git stash drop stash@{<i>}    # 移除指定的储藏
-$ git stash pop                 # 应用储藏并移除
+$ git stash                      # 保存当前的工作进度，分别对Index和Workspae的状态进行保存
+$ git stash save "<description>" # 保存当前工作环境, 并添加描述信息
+$ git stash list                 # 查看现有储藏
+$ git stash apply [stash@{<i>}]  # 应用指定的储藏,如果不指定则应用最后stash储藏
+$ git stash drop stash@{<i>}     # 移除指定的储藏
+$ git stash pop                  # 应用储藏并移除
 ```
 
 ---
