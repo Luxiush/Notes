@@ -1,4 +1,4 @@
-#[Python](http://www.runoob.com/python/python-tutorial.html)
+# [Python](http://www.runoob.com/python/python-tutorial.html)
 ## 文件格式
 * 第一行用于指示Python的安装位置
 * 第二行用于指示文件的编码方式（文件中有中文时要指定）
