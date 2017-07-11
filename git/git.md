@@ -70,9 +70,12 @@ $ git pull <远程主机名> <远程分支名>:<本地分支名>
 
 ### git branch
 ```shell
-$ git branch            # 查看分支
-$ git branch <name>     # 创建分支
-$ git branch -d <name>  # 删除分支
+$ git branch            # 查看分支(本地)
+$ git branch -a         # 查看所有分支(远程+本地)
+$ git branch <name>     # 创建分支
+$ git branch -m <oldname> <newname>  # 重命名本地分支
+$ git branch -d <name>  # 删除本地分支
+$ git push --delete origin <branchname> # 删除远程分支
 ```
 
 ### git merge
