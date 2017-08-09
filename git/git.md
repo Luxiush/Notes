@@ -99,6 +99,8 @@ $ git ls-files                           # 查看已经追踪的文件文件
 $ git log [--graph]                      # 查看commit_id
 $ git rm <file1> <file2>                 # 删除工作区文件(会删除本地文件)
 $ git mv <file-original> <file-renamed>  # 更改文件名
+$ git log --pretty=oneline <filename>    # 查看某个文件的修改历史
+$ git show <commit_id>                   # 查看某次提交所做的修改
 ```
 
 ---
