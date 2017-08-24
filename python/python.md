@@ -9,10 +9,8 @@
 ```
 
 ## 数据类型
-* 整数，浮点数，字符串 (可以是二进制数据)
-* 布尔
-  -- Ture,False
-  -- and, or, not
+* 整数，浮点数，字符串(可以是二进制数据)
+* 布尔(Ture,False), (and, or, not)
 * 空值(None)
 
 ## 运算符
@@ -25,11 +23,11 @@
 ## 条件语句
 ```python
 if a>b :
-	...
+    ...
 elif a<b :
-	...
+    ...
 else :
-	...
+    ...
 ```
 
 ## 循环语句
@@ -37,8 +35,8 @@ else :
 ```python
 count = 0
 while (count<10) :
-	print("count=",count)
-	count += 1
+    print("count=",count)
+        count += 1
 ```
 
 * for
@@ -96,15 +94,16 @@ list2_ = list2 * 4 #重复 (list2_ = [4,4,4,4])
 * 键值不允许`重复`,不允许`修改`
 
 ### 基本操作
-```python
-dict = {'Name':'Zara', 'Age':7, 'Class':'First'}#创建字典
-dict['Age'] = 8 								#更新元组
-dict['Department'] = 'Computer Science' 		#添加元组
-del dict['Age'] 								#删除条目
-del dict 										#删除字典
+```python 
+dict = {'Name':'Zara', 'Age':7, 'Class':'First'}   # 创建字典
+dict['Age'] = 8                                    # 更新元组
+dict['Department'] = 'Computer Science'            # 添加元组
+del dict['Age']                                    # 删除条目
+del dict                                           # 删除字典
 ```
 
 ## 日期和时间
+
 
 ## 函数
 ```python
