@@ -1,12 +1,28 @@
 # shell 常用命令
 ## grep
-* 文件搜索
+* 文件搜索 
+grep <option>... <pattern> <file>... 
 ```
 $ grep '<要找的内容>' <目标文件>
-$ grep -E '<要找的内容>' <目标文件>             # 支持正则表达式
 $ grep <pattern1> | <pattern2> <files>       # 显示匹配 pattern1 或 pattern2的行，
 $ grep <pattern1> <files> | grep <pattern2>  # 显示既匹配 pattern1 又匹配pattern2 的行。
 ```
+
+常用参数
+
+| 参数 | 说明 |
+|:---|:---|
+| -i | 忽略大小写 |
+| -E | 支持正则表达式搜索 |
+| -w | 只匹配整个单词 |
+| -x | 只匹配整行 |
+| -v | 显示不匹配的行,(反选) |
+| -m | 指定最大匹配次数(max-count) |
+| -n | 同时输出行数(line number) |
+| -c | 只输出匹配的个数(count) |
+| -B | 同时输出第一个匹配的前n行(before) |
+| -A | 同时输出最后一个匹配的后n行(after) |
+
 
 * 文件比较
 ```
