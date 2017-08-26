@@ -44,8 +44,26 @@ $ ll -t|head
 | -size | +1000000c | 文件大小大于1M(1000000bytes) |
 | -type | d | 文件类型为d的目录文件 |
 | -type | I | 文件类型为|的链接文件 |
+| -type | f | 普通文件 |
 | -perm | 755 | 属性为755 |
 | -user | root | 属主为root |
+| -depth | ... | 广度优先遍历 | 
+| -maxdepth | <int_number> | 设定递归搜索的目录层级, 1为当前目录(不递归) |
+
+
+## [xargs](http://blog.csdn.net/xifeijian/article/details/9286189)
+> xargs是给命令传递参数的一个过滤器，也是组合多个命令的一个工具。它把一个数据流分割为一些足够小的块，以方便过滤器和命令进行处理。
+```
+$ <command> | xargs -n 2    # -n 指定每行显示的参数个数
+$ <command> | xargs -d "<delimeter>" # -d 指定参数之间的分隔符为<delimeter>
+$ <command> | xargs -i  # 将结果传递给{}
+```
+
+examples:
+```
+$ find . -type f -print | xargs grep "admin"        # 在当前路径下的普通文件中搜索 "admin"
+$ find . -type f -print | xargs -i cp {} /usr/      # -i 选项后，xargs将匹配的结果传递给 {} 
+```
 
 
 
