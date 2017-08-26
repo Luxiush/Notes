@@ -49,14 +49,17 @@ $ ll -t|head
 | -user | root | 属主为root |
 | -depth | ... | 广度优先遍历 | 
 | -maxdepth | <int_number> | 设定递归搜索的目录层级, 1为当前目录(不递归) |
+| -print | ... | 一行一个 |
+| -print0 | ... | 不换行 |
 
 
 ## [xargs](http://blog.csdn.net/xifeijian/article/details/9286189)
 > xargs是给命令传递参数的一个过滤器，也是组合多个命令的一个工具。它把一个数据流分割为一些足够小的块，以方便过滤器和命令进行处理。
 ```
-$ <command> | xargs -n 2    # -n 指定每行显示的参数个数
-$ <command> | xargs -d "<delimeter>" # -d 指定参数之间的分隔符为<delimeter>
-$ <command> | xargs -i  # 将结果传递给{}
+$ <command> | xargs -n <max_args>       # -n 指定每行显示的参数个数
+$ <command> | xargs -d "<delimeter>"    # -d 指定参数之间的分隔符为<delimeter>
+$ <command> | xargs -e "<EOF_string>"   # 将<EOF_string>之前的参数传递给xargs后面的命令(不包括<EOF_string>)
+$ <command> | xargs -i                  # 将结果传递给{} 
 ```
 
 examples:
