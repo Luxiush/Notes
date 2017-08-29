@@ -30,6 +30,51 @@ $ grep -vwf file1 file2 # 统计file1中没有，file2中有的行
 ```
 
 
+## cat
+> Concatenate FILE(s), or standard input, to standard output.
+
+
+## sort
+将文件的每一行作为一个单位，相互比较，比较原则是从首字符向后，依次按ASCII码值进行比较，最后将他们按升序输出。
+```
+$ sort <options> <file>
+```
+
+|参数 | 说明 |
+|:---|:---|
+| -b | 忽略前导空白符 |
+| -d | 字典序 |
+| -f | 忽略大小写排序 |
+| -g | 按数字排序 |
+| -n | 根据每行数字的值排序 |
+| -i | 忽略不可显示字符 |
+| -m | 月份排序(JAN < ... < 'DEC') |
+| -R | 根据随机的哈希值排序 |
+| -r | reverse |
+| -m | merge 合并已经有序的文件 |
+| -u | 去除重复行 |
+
+
+
+## uniq
+报告或者消除文件中的重复内容
+
+
+## cut 
+从输入文件中提取每行的特定部分
+```
+$ cut <options> <file>
+```
+常用参数
+
+| 参数 | 例子 | 说明 |
+|:---|:---|:---|
+| -b | 3 or 3,5,7 or 3-9 or 3- or -9  | 指定提取每行的特定`字节` |
+| -c | 3 or 3,5,7 or 3-9 or 3- or -9 | 指定提取每行的特定`字符` |
+| -f | 3 or 3,5,7 or 3-9 or 3- or -9 | 指定要提取的`域` |
+| -d | "<delimiter1>,<delimiter2>..." | 指定每行的分隔符(默认为\t),根据分隔符将每行切分若干`域` |
+
+
 ## [find](http://www.cnblogs.com/johnnyliu/archive/2013/04/09/3010384.html)
 ```
 $ find <查找目录> <参数> <匹配模型>
