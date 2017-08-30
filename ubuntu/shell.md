@@ -23,6 +23,8 @@ $ grep <pattern1> <files> | grep <pattern2>  # 显示既匹配 pattern1 又匹�
 | -c | 只输出匹配的个数(count) |
 | -B | 同时输出第一个匹配的前n行(before) |
 | -A | 同时输出最后一个匹配的后n行(after) |
+| -r | 递归查找 |
+| -R | 查找所有文件包含子目录 |
 
 
 * 文件比较
