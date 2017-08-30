@@ -4,6 +4,7 @@
 ```
 $ grep <options> <pattern> <files>   
 $ grep '<要找的内容>' <目标文件>
+$ grep '<要找的内容>' *                        # 在当前文件夹下的所有文件中找指定内容
 $ grep <pattern1> | <pattern2> <files>       # 显示匹配 pattern1 或 pattern2的行，
 $ grep <pattern1> <files> | grep <pattern2>  # 显示既匹配 pattern1 又匹配pattern2 的行。
 ```
@@ -182,10 +183,11 @@ $ whereis <options> <directory> <filename>
 | -M | 指定帮助文档的搜索路径 |
 
 
-
-
-
-
+## nohup
+nohup命令可以将程序以忽略挂起信号的方式运行起来，被运行的程序的输出信息将不会显示到终端. 
+```
+$ nohup <command> & 
+```
 
 
 
