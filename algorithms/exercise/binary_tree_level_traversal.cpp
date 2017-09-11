@@ -27,7 +27,7 @@ struct TreeNode {
 			size = Q.size();
 			for(int i=0; i<size; ++i){
 				t = Q.front();
-				temp.push_back(t-val);
+				temp.push_back(t->val);
 				Q.pop();
 				if(t->left) Q.push(t->left);
 				if(t-right) Q.push(t->right);

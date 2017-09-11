@@ -2,21 +2,23 @@
 /* http://bookshadow.com/weblog/2015/08/06/leetcode-candy/ */
 /*
 题意：
-    N个孩子站成一排，每个孩子有一个评分，
-为每个孩子分配糖果（每个孩子至少有一个），
-要求评分高的孩子得到的糖果要多余他的邻居
+N个孩子站成一排，每个孩子有一个评分，为每个孩子分配糖果（每个孩子至少有一个），要求评分高的孩子得到的糖果要多余他的邻居.
+求: 
+所需的最少糖果数量所需的最少糖果数量.
 */
 
     int candy(vector<int> &ratings) {
         int n = ratings.size();
         vector<int> candy(n,1);
         
+		/*处理评分递增的情况*/
         for(int i=1; i<n; ++i){
             if(ratings[i]>ratings[i-1]){
                 candy[i] = candy[i-1]+1;
             }
         }
         
+		/*处理评分递减的情况*/
         for(int j=n-2; j>=0; --j){
             if(ratings[j]>ratings[j+1]){
                 if(candy[j]<candy[j+1]+1){
