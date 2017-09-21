@@ -63,6 +63,11 @@ $ sort <options> <file>
 报告或者消除文件中的重复内容
 
 
+* 对文本进行排序去重
+```
+$ sort <file_in> | uniq > <file_out>
+```
+
 ## cut 
 从输入文件中提取每行的特定部分
 ```
@@ -77,6 +82,12 @@ $ cut <options> <file>
 | -f | 3 or 3,5,7 or 3-9 or 3- or -9 | 指定要提取的`域` |
 | -d | "<delimiter1>,<delimiter2>..." | 指定每行的分隔符(默认为\t),根据分隔符将每行切分若干`域` |
 
+
+## awk
+* 读取文件第一行
+```
+$ awk 'NR==1; NR==2 {exit;}' <file_in>
+```
 
 ## [find](http://www.cnblogs.com/johnnyliu/archive/2013/04/09/3010384.html)
 ```
@@ -116,6 +127,7 @@ $ ll <options> <directory>
 | -r | reverse order |
 | -s | size,输出大小 |
 | -t | 按修改时间排序 | 
+| -d | 只显示目录 |
 
 
 ## [xargs](http://blog.csdn.net/xifeijian/article/details/9286189)
