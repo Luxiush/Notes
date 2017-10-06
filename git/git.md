@@ -97,11 +97,25 @@ $ git merge <branchName>                # 合并指定分支到当前分支
 ``` shell
 $ git ls-files                           # 查看已经追踪的文件文件
 $ git log [--graph]                      # 查看commit_id
-$ git rm <file1> <file2>                 # 删除工作区文件(会删除本地文件)
 $ git mv <file-original> <file-renamed>  # 更改文件名
 $ git log --pretty=oneline <filename>    # 查看某个文件的修改历史
 $ git show <commit_id>                   # 查看某次提交所做的修改
 ```
+
+### [git rm](https://git-scm.com/docs/git-rm)
+* 删除文件
+```
+$ git rm <option> <file_name>
+```
+
+| option | usage |
+|:--- |:--- |
+| 没参数 | 同时删除工作区和暂存区 |
+| -r | 递归删除(用于删除文件夹) |
+| -f | force  |
+| --cached | 只删除暂存区 |
+| -q | quiet, 不需要确认 |
+
 
 ---
 ## 其他操作
@@ -171,6 +185,9 @@ $ git config --global core.autocrlf false
   $ git config --global push.default match
 > push all branches having the same name on both ends.
 > 本地所有分支都会被push上去
+
+### [.gitignore not working](https://stackoverflow.com/questions/25436312/gitignore-not-working)
+由于在添加ignore策略的时候被要被忽略的文件就已经在git中了, 所以需要手动将之后要被忽略的文件从git中删除(git rm命令).
 
 
 
