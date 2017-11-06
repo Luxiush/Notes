@@ -97,3 +97,5 @@ int A::a2 = 0;
 
 ## [include 预编译]( http://ticktick.blog.51cto.com/823160/596179/ ) 
 
+
+## extend C 
