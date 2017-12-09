@@ -1,14 +1,14 @@
 # MongoDB
 ## [简介](https://docs.mongodb.com/manual/introduction/)
 * 介于`关系数据库`和`非关系数据库`之间
-* 最像`关系数据库`的`非关系数据库` 
+* 最像`关系数据库`的`非关系数据库`
 * 数据结构为key-value对，类似JSON
 * 支持多种查询语言:
 * 高可用: 自动故障转移/数据冗余
 * 横向扩展
 * 多存储引擎: WiredTriger/MMAPv1
 
-database > collection > document
+database > collection(table) > document(row)
 
 ---
 ## 安装 & 配置
@@ -62,7 +62,7 @@ $ mongodump -h IP --port 端口 -u 用户名 -p 密码 -o 输出路径
 
 | 参数 | 说明 |
 |:--- |:--- |
-| -d | 指定数据库 | 
+| -d | 指定数据库 |
 | -c | 指定表名 |
 | -f | 指定导出的字段,以','分割 |
 | -q | 按条件导出(数据库的查询语句) |
@@ -94,8 +94,8 @@ $ mongorestore <-h IP --port 端口 -u 用户名 -p 密码> <备份文件所在�
 $ mongo # 启动mongo
 $ exit  # 退出
 $ help  # 获取帮助信息
-$ db.help() # 
-$ show dbs 
+$ db.help() #
+$ show dbs
 $ use <db_name> # 设置当前数据库,如果没有则自动创建
 $ db.dropDatabase()  # 删除当前数据库
 $ db  # 显示当前数据库名
@@ -114,19 +114,19 @@ $ db.<collection_name>.find(query_dict, projection_dict)
 $ db.<collection_name>.distinct(field_string, query_dict, options)
 ```
     field_string: 指定的维度(string type)
-    query_dictt 筛选条件: {"<field1>":<value>, "<field2>":<value>, ...} 
-    
+    query_dictt 筛选条件: {"<field1>":<value>, "<field2>":<value>, ...}
+
     return: 指定维度的所有取值, list
 ```
 
 ### count
-$ db.<collection_name>.count(query_dict, options_dict)
+                        $ db.<collection_name>.count(query_dict, options_dict)
 ```
     query_dict 查询条件: {"<field1>":<value>, "<field2>":<value>, ...}
     option_dict 可选项: {
         "limit": (int type) The maximum number of documents to count.
         "skip": (int type) The number of documents to skip before counting.
-        "maxTimeMS": (int type) 本次查询所允许的最长运行时间 
+        "maxTimeMS": (int type) 本次查询所允许的最长运行时间
         "hint": (string or document) ...
     }
 ```
@@ -134,12 +134,12 @@ $ db.<collection_name>.count(query_dict, options_dict)
 ### insert
 $ db.<collection_name>.insert(dict_arr, options)
 ```
-    dict_arr: dict({})或dict列表([{},{},...]) 
+    dict_arr: dict({})或dict列表([{},{},...])
     options: {
         writeConcern: ... ,
         ordered: true/false   # 是否按顺序插入,默认为true
     }
-    
+
     return: WriteResult({
         "nInserted" : 1,
         "writeConcernError" : {
@@ -173,7 +173,7 @@ $ db.collection.update(query, update, options)
         multi: <bool>,   # 当查询条件匹配到多条时是否更新多条记录, 默认为false
         ...
     }
-    
+
 ```
 
 ### updateOne
@@ -213,7 +213,7 @@ $ db.collection.update(query, update, options)
 
 #### createUser
 ```
-db.createUser({ 
+db.createUser({
   user: "<name>",
   pwd: "<cleartext password>",
   customData: { <any information> },  # 备注信息
@@ -250,7 +250,7 @@ db.updateUser(
 MongoDB数据以JSON的格式存储在文件中
 
 ### 建立连接 MongoClient
-* MongoClient(host='localhost', port=27017, document_class=dict, tz_aware=False, connect=True, **kwargs)
+* MongoClient(host='localhost', port=27017, document_class=dict, tz_aware=False, connect=True, \*\*kwargs)
 ```
 from pymongo import MongoClient
 c = MongoClient()
@@ -259,7 +259,7 @@ c.test_database
 ```
 
 * MongoClient(mongodbURL)
-[mongodbURL 格式](https://docs.mongodb.com/manual/reference/connection-string/): 
+[mongodbURL 格式](https://docs.mongodb.com/manual/reference/connection-string/):
 > mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]
 
 其中options的取值参加: [here](https://docs.mongodb.com/manual/reference/connection-string/#connections-connection-options)
@@ -269,12 +269,12 @@ api文档: http://api.mongodb.com/python/current/api/pymongo/
 #### [文件查询](https://docs.mongodb.com/manual/tutorial/getting-started/)
 * pymongo.collection.Collection.`find()`
 ```
-    cursor = db.inventory.find({}) # select all 
+    cursor = db.inventory.find({}) # select all
 
     # similar to sql: select * from inventory where status="D"
-    cursor = db.inventory.find({"status":"D"}) 
+    cursor = db.inventory.find({"status":"D"})
 
-    
+
 ```
 
 #### [文件更新](https://docs.mongodb.com/manual/tutorial/update-documents/#write-op-update)
@@ -332,6 +332,3 @@ db.inventory.insert_many(
 
 
 #### cursor
-
-
-
