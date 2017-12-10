@@ -18,7 +18,7 @@
 ---
 ## 基本操作
 
-### Workspace --> Index 
+### Workspace --> Index
 ``` shell
 $ git add <file1] <file2> #添加指定文件
 $ git add <dir>           #添加指定目录，包括子目录
@@ -47,7 +47,7 @@ $ git reset --hard <commit_id> # 同时更新WorkSpace
 
 ### Repository --> Remote
 ``` shell
-$ git push <远程主机名> <本地分支名>:<远程分支名> 
+$ git push <远程主机名> <本地分支名>:<远程分支名>
 ```
 * 将本地分支的更新推送至远程主机
 * -u 参数：建立关联，通常第一次提交会用到
@@ -139,8 +139,8 @@ $ git clone <版本库网址> -b <分支名>
 ```shell
 $ git init <project-name> # 初始化本地仓库
 $ git remote add git@github.com:<Repository-addr>/<username>.git # 关联远程库
-$ git fetch 
-$ git checkout 
+$ git fetch
+$ git checkout
 ```
 
 ### git remote
@@ -170,16 +170,16 @@ $ git stash pop                  # 应用储藏并移除
 
 $ git config --global core.autocrlf false
 
-### push策略---match v.s simple 
+### push策略---match v.s simple
 * simple （Git 2.x 默认策略）
   $ git config --global push.default simple
 > in centralized workflow, work like upstream with an added safety to refuse to push if the upstream branch’s name is different from the local one.
 > push到同名分支
 
-* upstream 
+* upstream
   $ git config --global push.default upstream
 > push the current branch back to the branch whose changes are usually integrated into the current branch (which is called @{upstream}). This mode only makes sense if you are pushing to the same repository you would normally pull from
-> 即 从哪个分支pull下来就push回哪个分支 
+> 即 从哪个分支pull下来就push回哪个分支
 
 * mtching （Git 1.x 默认策略）
   $ git config --global push.default match
@@ -189,12 +189,15 @@ $ git config --global core.autocrlf false
 ### [.gitignore not working](https://stackoverflow.com/questions/25436312/gitignore-not-working)
 由于在添加ignore策略的时候被要被忽略的文件就已经在git中了, 所以需要手动将之后要被忽略的文件从git中删除(git rm命令).
 
-
+### 明明配置了ssh key, 为什么每次push的时候还要输入密码 ?
+#### git的访问方式
+* git可以用ssh方式访问也可以用http方式. 前者只需要配置好ssh key就可以了, 而后者则每次都需要输入密码.
+* 用`git remote`命令查看远程主机是htt地址还是ssh地址
 
 ## References
 
 1. [图解git]( https://marklodato.github.io/visual-git-guide/index-zh-cn.html )
 2. [廖雪峰 Git教程]( http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/ )
 3. [阮一峰 Git远程操作详解]( http://www.ruanyifeng.com/blog/2014/06/git_remote.html )
-4. [阮一峰 常用 Git 命令清单]( http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html ) 
+4. [阮一峰 常用 Git 命令清单]( http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html )
 5. [6.3 Git 工具 - 储藏（Stashing）]( https://git-scm.com/book/zh/v1/Git-%E5%B7%A5%E5%85%B7-%E5%82%A8%E8%97%8F%EF%BC%88Stashing%EF%BC%89 )
