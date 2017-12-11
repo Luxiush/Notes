@@ -1,6 +1,6 @@
 # shell 常用命令
 ## grep
-文件搜索 
+文件搜索
 ```
 $ grep <options> <pattern> <files>   
 $ grep '<要找的内容>' <目标文件>
@@ -36,11 +36,11 @@ $ grep -vwf file1 file2 # 统计file1中没有，file2中有的行
 ## [sed(stream editor)]( https://en.wikipedia.org/wiki/Sed#Mode_of_operation )
 * 流编辑器
 
-### 工作原理: 
+### 工作原理:
 * 将文本逐行读取到`模式空间`(pattern space)中, 接着用sed命令(sed script)进行处理, 然后输出到屏幕开始下一行.
 * sed命令是<pattern,action>格式,相当于if语句,用于指明什么时候执行什么指令
 
-### 常用参数 
+### 常用参数
 | 参数 | 说明 |
 |:---|:---|
 | -n | slient模式, 只输出被处理的行 |
@@ -77,6 +77,7 @@ $ grep -vwf file1 file2 # 统计file1中没有，file2中有的行
 #### [用法实例]( http://man.linuxde.net/sed )
 | ... | ... | ... |
 |:---|:---|:---|
+| 追加 | sed '/^##/a\aaaa' | 在以##开头的行之后追加aaaa |
 | 删除 | sed '/^$d' file.name | 删除空白行 |
 | ... | sed '2d' file.name | 删除第2行 |
 | ... | sed '2,$d' file.name | 删除第2行到莫行 |
@@ -127,7 +128,7 @@ $ sort <options> <file>
 $ sort <file_in> | uniq > <file_out>
 ```
 
-## cut 
+## cut
 从输入文件中提取每行的特定部分
 ```
 $ cut <options> <file>
@@ -155,7 +156,7 @@ $ find <查找目录> <参数> <匹配模型>
 
 | **参数** | **匹配模型** | **说明** |
 |:---|:---|:---|
-| -name | *.sh | 以.sh结尾 | 
+| -name | *.sh | 以.sh结尾 |
 | -mtime | -5 | 更改时间在5天以内 |
 | -mtime | +3 | 更改时间在3天以前 |
 | -size | +1000000c | 文件大小大于1M(1000000bytes) |
@@ -164,7 +165,7 @@ $ find <查找目录> <参数> <匹配模型>
 | -type | f | 普通文件 |
 | -perm | 755 | 属性为755 |
 | -user | root | 属主为root |
-| -depth | ... | 广度优先遍历 | 
+| -depth | ... | 广度优先遍历 |
 | -maxdepth | <int_number> | 设定递归搜索的目录层级, 1为当前目录(不递归) |
 | -print | ... | 一行一个 |
 | -print0 | ... | 不换行 |
@@ -185,7 +186,7 @@ $ ll <options> <directory>
 | -l | list format |
 | -r | reverse order |
 | -s | size,输出大小 |
-| -t | 按修改时间排序 | 
+| -t | 按修改时间排序 |
 | -d | 只显示目录 |
 
 
@@ -195,13 +196,13 @@ $ ll <options> <directory>
 $ <command> | xargs -n <max_args>       # -n 指定每行显示的参数个数
 $ <command> | xargs -d "<delimeter>"    # -d 指定参数之间的分隔符为<delimeter>
 $ <command> | xargs -e "<EOF_string>"   # 将<EOF_string>之前的参数传递给xargs后面的命令(不包括<EOF_string>)
-$ <command> | xargs -i                  # 将结果传递给{} 
+$ <command> | xargs -i                  # 将结果传递给{}
 ```
 
 examples:
 ```
 $ find . -type f -print | xargs grep "admin"        # 在当前路径下的普通文件中搜索 "admin"
-$ find . -type f -print | xargs -i cp {} /usr/      # -i 选项后，xargs将匹配的结果传递给 {} 
+$ find . -type f -print | xargs -i cp {} /usr/      # -i 选项后，xargs将匹配的结果传递给 {}
 ```
 
 
@@ -235,7 +236,7 @@ $ wc <options> <filename>
 | -w | 统计字数 |
 | -l | 统计行数 |
 | -c | 统计字节数 |
-| -L | 最长行的长度 | 
+| -L | 最长行的长度 |
 | -m | 统计字符数 |
 
 
@@ -257,17 +258,10 @@ $ whereis <options> <directory> <filename>
 
 
 ## nohup
-nohup命令可以将程序以忽略挂起信号的方式运行起来，被运行的程序的输出信息将不会显示到终端. 
+nohup命令可以将程序以忽略挂起信号的方式运行起来，被运行的程序的输出信息将不会显示到终端.
 ```
-$ nohup <command> & 
+$ nohup <command> &
 ```
 
 ## crontab
 设置定时任务
-
-
-
-
-
-
-
