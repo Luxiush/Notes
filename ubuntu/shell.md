@@ -93,8 +93,50 @@ $ grep -vwf file1 file2 # 统计file1中没有，file2中有的行
 | 下一行 | sed -n '/aaa/{n;p}' file.name | 输出包含aaa的行的下一行 |
 | 多重编辑 | sed -e '1,3d' -e 's/aaa/bbb/g' file.name | 删除1-3行,然后把其余行的aaa替换为bbb |
 
-## cat
+## 查看文件命令
+
+### head
+* 显示文档开头
+```
+$ head <options> <file>
+```
+
+| 参数 | 说明 |
+|:---|:---|
+| -[N] | 输出文件的头[N]行 |
+| -n -[N] | 不显示最后[N]行 |
+
+
+### tail
+* 显示文档结尾
+```
+$ tail <options> <file>
+```
+
+| 参数 | 说明 |
+|:---|:---|
+| -[N] | 输出文件的最后[N]行 |
+| -n +[N] | 从第[N]行开始显示 |
+| -f | 循环读取, 用于监视文件的增长 |
+
+
+### more
+* 用于分页显示文件, [Space]/[Enter]下一页, [b]上一页.
+* 同时还支持字符串查找(与vi相似)
+* 启动时就加载整个文件
+
+### less
+* 用于分页查看文件
+* 比more更灵活, 也支持字符串查找
+* 在查看之前不会加载整个文件
+
+### cat
 > Concatenate FILE(s), or standard input, to standard output.
+
+### tac
+* 从最后一行开始输出文件
+* 或者将文件倒序输出
+
 
 
 ## sort
@@ -103,7 +145,7 @@ $ grep -vwf file1 file2 # 统计file1中没有，file2中有的行
 $ sort <options> <file>
 ```
 
-|参数 | 说明 |
+| 参数 | 说明 |
 |:---|:---|
 | -b | 忽略前导空白符 |
 | -d | 字典序 |
@@ -143,11 +185,29 @@ $ cut <options> <file>
 | -d | "<delimiter1>,<delimiter2>..." | 指定每行的分隔符(默认为\t),根据分隔符将每行切分若干`域` |
 
 
-## awk
+## [awk]( http://man.linuxde.net/awk#awk的工作原理 )
+> awk是一种**编程语言**(语法类似C)，用于在linux/unix下对文本和数据进行处理。
+
+> 简单来说awk就是把文件逐行的读入，以空格为默认分隔符将每行切片，切开的部分再进行各种分析处理。
+
+### 工作原理
+```
+awk 'BEGIN{ commands } pattern{ commands } END{ commands }'
+```
+* `BEGIN{ command }`, 在读取行`之前`执行, 常用于初始化
+* `patter{ command }`, 每次读取一行, 对每一行都执行指定的操作
+* `END{ command}`, 在读取完所有行`之后`执行
+
 * 读取文件第一行
 ```
 $ awk 'NR==1; NR==2 {exit;}' <file_in>
 ```
+
+* 累加求和
+```
+$ gawk '{ sum += $1 }; END { print sum}' <file>
+```
+
 
 ## [find](http://www.cnblogs.com/johnnyliu/archive/2013/04/09/3010384.html)
 ```
