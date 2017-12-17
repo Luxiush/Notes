@@ -35,5 +35,5 @@ Reference:
 | -C | `Compile` and `assemble`, but do not link |
 
 * extra 
-动态库名格式: lib<lib_name>.so 
-静态库: lib<lib_name>.a 
+<p> 动态库名格式: lib<lib_name>.so </p>
+<p> 静态库: lib<lib_name>.a  </p>
