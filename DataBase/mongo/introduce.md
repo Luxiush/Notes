@@ -10,6 +10,14 @@
 * 基于js的存储过程
 * database > collection(table) > document(row)
 
+---
+## 安装 & 配置
+官网教程 https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
+
+配置文件: /etc/mongod.conf
+数据库文件: var/lib/mongodb
+日志文件: /var/log/mongodb/mongod.log
+
 ### 索引
 * 唯一强制字段`_id`, 并且会默认在该字段上建立索引
 * 支持唯一索引, 不能创建在具有重复值的键上.
@@ -25,11 +33,19 @@
 * 灵活, nosql无需事先建立字段, 随时可以存储自定义的数据格式. 而sql增删字段非常麻烦, 尤其在数据量非常大的时候
 
 * 为什么要使用nosql: http://www.infoq.com/cn/news/2011/01/nosql-why
+> nosql系统是被设计用于成百上千台机器集群中的, 而非共享型数据库的架构. 
 
 ---
-## 安装 & 配置
-官网教程 https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
+## MongoDB v.s. MySql
 
-配置文件: /etc/mongod.conf
-数据库文件: var/lib/mongodb
-日志文件: /var/log/mongodb/mongod.log
+### MongoDB的特点
+* 非关系数据库, 采用Bson的数据结构来存储数据, 基于文档
+* 不需要预先定义schema, 更灵活
+* 可以轻松实现分布式数据中心和高扩展性.
+* 高可用
+
+### MySql的特点
+* 关系型数据库, 采用结构化的sql语句来处理数据
+* 需要预先定义数据结构schema. 
+* 有主键,外键等约束. 
+* 年代久远, 成熟, 配套设施(研发人员,社区等)完善. 
