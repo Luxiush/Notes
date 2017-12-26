@@ -1,4 +1,77 @@
 # shell 常用命令
+
+## 基本命令
+
+### 解压&打包
+* unzip
+
+* tar
+|   |   |
+|:---|:---|
+| -c | 建立新的压缩文件(create) |
+| -x | 从压缩文件中提取(extract) |
+| -v | 显示操作过程 |
+| -f | 指定压缩文件 |
+| -t | 列出压缩文件的内容 |
+
+### 改变文件所有者/所属组
+* chown
+
+* chgrp
+
+
+### 进程管理
+#### ps
+|  |  `ps -aux` 各列的含义 |
+|:---|:---|
+| USER | 所属用户  |
+| PID | 进程ID  |
+| %CPU | 占用的CPU百分比  |
+| %MEM | 占用的内存百分比  |
+| VSZ |  虚拟内存占用量(kb) |
+| RSS  | 固定内存占用量(kb)  |
+| TTY  | 所运行的终端,'?'表示与终端无关  |
+| STAT  | 状态  |
+| START  | 启动的时间  |
+| TIME   | 实际使用CPU总的时间  |
+|COMMAND | 进程的命令和参数  |
+
+|  | STAT的常见取值 |
+|:---|:---|
+| Z  | 僵尸进程  |
+| S  | 休眠  |
+| D  | 无法中断的休眠状态(I/O)  |
+| T  | 停止  |
+| <  | 优先级较高  |
+| N  | 优先级较低  |
+
+
+#### kill
+* 用于发送`指定信号`到`指定进程`
+```
+$ kill -KILL 1234
+```
+
+|  | 常用信号 |
+|:---|:---
+| HUP  |   1  |  终端断线 |
+| INT  |   2  |  中断（同 Ctrl + C） |
+| QUIT |   3  |  退出（同 Ctrl + \） |
+| KILL |   9  |  强制终止(注意会产生僵尸进程), 其他信号进程都有权利忽略 |
+| TERM |  15  |  终止(默认值), 在退出之前可以清理并释放资源 |
+| CONT |  18  |  继续（与STOP相反， fg/bg命令） |
+| STOP |  19  |  暂停（同 Ctrl + Z） |
+
+
+##### 关于僵尸进程&孤儿进程
+* 孤儿进程：一个父进程退出，而它的一个或多个子进程还在运行，那么那些子进程将成为孤儿进程。孤儿进程将被init进程(进程号为1)所收养，并由init进程对它们完成状态收集工作。
+
+* 僵尸进程：一个进程使用fork创建子进程，如果子进程退出，而父进程并没有调用wait或waitpid获取子进程的状态信息，那么子进程的进程描述符仍然保存在系统中。僵尸进程会占用PID, 过多僵尸进程会导致PID耗尽, 系统无法产生新的进程.
+
+>任何一个进程，当其运行结束(exit)之后，其使用的所有资源和内存空间都会释放，以供其他进程使用；但其在OS内核的process table中仍旧保留一条记录，包含该进程的process ID，退出状态exit status，运行时间等信息。这些信息是方便该进程的父进程随时获取它的exit status(即子进程结束后为什么要进入zombie状态)。
+
+
+---
 ## grep
 文件搜索
 ```
@@ -325,3 +398,18 @@ $ nohup <command> &
 
 ## crontab
 设置定时任务
+
+
+## [update-alternatives]( http://blog.csdn.net/jasonding1354/article/details/50470109 )
+* 用于维护系统命令链接符
+
+| 常用选项 |   |   |
+|:---|:---|
+| list | 显示一个命令链接符的可选命令 |
+|   | $ update-alternatives --list <name> |
+| install | 添加链接符 |
+|   | $ update-alternatives --install <link> <name> <path> <priority> |
+| remove | 删除一个命令的link值 |
+|   | $ update-alternatives --remove <name> <path> |
+| config | 修改命令链接符的指向 |
+|   | $ update-alternatives --config <name> |
