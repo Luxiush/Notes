@@ -410,7 +410,7 @@ $ nohup <command> &
 ## [update-alternatives]( http://blog.csdn.net/jasonding1354/article/details/50470109 )
 * 用于维护系统命令链接符
 
-| 常用选项 |   |   |
+| 常用选项 |   |
 |:---|:---|
 | list | 显示一个命令链接符的可选命令 |
 |   | $ update-alternatives --list <name> |
