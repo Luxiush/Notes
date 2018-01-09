@@ -1,10 +1,11 @@
 /*
 ## ZOJ 1508 Intervals
 ### 题目
-
+> 有一个序列，题目用n个整数组合 [ai，bi，ci]来描述它，[ai，bi，ci]表示在该序列中处于[ai，bi]这个区间的整数至少有ci个。如果存在这样的序列，请求出满足题目要求的最短的序列长度是多少。如果不存在则输出 -1。
 
 ### 思路
 <https://wenku.baidu.com/view/0162ad40ed630b1c59eeb5f2.html>
+- 差分约束系统建图, 然后用`Bellman Ford`算法求最短路径. 
 
 ### 参考代码
 <http://www.cnblogs.com/GO-NO-1/p/3440954.html>
