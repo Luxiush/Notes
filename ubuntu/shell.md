@@ -422,3 +422,7 @@ $ nohup <command> &
 |   | $ update-alternatives --remove <name> <path> |
 | config | 修改命令链接符的指向 |
 |   | $ update-alternatives --config <name> |
+
+
+## expr
+布尔运算, 比较运算, 四则算术运算, 正则匹配, 表达式求值
