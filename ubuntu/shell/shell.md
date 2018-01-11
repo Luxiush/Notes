@@ -126,7 +126,7 @@ $ grep -vwf file1 file2 # 统计file1中没有，file2中有的行
 | 参数 | 说明 |
 |:---|:---|
 | -n | slient模式, 只输出被处理的行 |
-| -e | 直接从命令行读取sed命令 |
+| -e | 多点编辑, 在同一行里执行多条命令 |
 | -f | 从文件读取sed命令 |
 | -i | in-place |
 | -r | 直接修改文件内容,不输出 |
@@ -162,7 +162,7 @@ $ grep -vwf file1 file2 # 统计file1中没有，file2中有的行
 | 追加 | sed '/^##/a\aaaa' | 在以##开头的行之后追加aaaa |
 | 删除 | sed '/^$d' file.name | 删除空白行 |
 | ... | sed '2d' file.name | 删除第2行 |
-| ... | sed '2,$d' file.name | 删除第2行到莫行 |
+| ... | sed '2,$d' file.name | 删除第2行到末行 |
 | ... | sed '/aaaa/d' file.name | 删除包含aaaa的行,aaaa可以为正则表达式 |
 | 替换 | sed 's/aaaa/bbbb/' file.name | 将行中的aaaa替换为bbbb,aaaa可以为正则表达式 |
 | ... | sed 's/aaaa/bbbb/g' file.name | 将行中所有的aaaa替换为bbbb |
@@ -265,30 +265,6 @@ $ cut <options> <file>
 | -c | 3 or 3,5,7 or 3-9 or 3- or -9 | 指定提取每行的特定`字符` |
 | -f | 3 or 3,5,7 or 3-9 or 3- or -9 | 指定要提取的`域` |
 | -d | "<delimiter1>,<delimiter2>..." | 指定每行的分隔符(默认为\t),根据分隔符将每行切分若干`域` |
-
-
-## [awk]( http://man.linuxde.net/awk#awk的工作原理 )
-> awk是一种**编程语言**(语法类似C)，用于在linux/unix下对文本和数据进行处理。
-
-> 简单来说awk就是把文件逐行的读入，以空格为默认分隔符将每行切片，切开的部分再进行各种分析处理。
-
-### 工作原理
-```
-awk 'BEGIN{ commands } pattern{ commands } END{ commands }'
-```
-* `BEGIN{ command }`, 在读取行`之前`执行, 常用于初始化
-* `patter{ command }`, 每次读取一行, 对每一行都执行指定的操作
-* `END{ command}`, 在读取完所有行`之后`执行
-
-* 读取文件第一行
-```
-$ awk 'NR==1; NR==2 {exit;}' <file_in>
-```
-
-* 累加求和
-```
-$ gawk '{ sum += $1 }; END { print sum}' <file>
-```
 
 
 ## [find](http://www.cnblogs.com/johnnyliu/archive/2013/04/09/3010384.html)
