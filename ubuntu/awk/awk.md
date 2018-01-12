@@ -1,4 +1,10 @@
 ## [awk]( http://man.linuxde.net/awk#awk的工作原理 )
+
+- awk是一个强大的**文本分析**工具，相对于grep的**查找**，sed的**编辑**，awk在其对数据分析并生成报告时，显得尤为强大。简单来说awk就是把文件逐行的读入，以空格为默认分隔符将每行切片，切开的部分再进行各种分析处理。
+
+> awk是一种**编程语言**(语法类似C)，用于在linux/unix下对文本和数据进行处理。
+
+
 ```
 $ awk [options] 'script' var=value file(s)
 $ awk [options] -f scriptfile var=value file(s)
@@ -7,11 +13,6 @@ $ awk [options] -f scriptfile var=value file(s)
 |:---|:---|
 | -f | 从脚本文件中读取awk命令 |
 | -F | 指定输入分隔符(可以是字符串或正则表达式) |
-
-
-> awk是一种**编程语言**(语法类似C)，用于在linux/unix下对文本和数据进行处理。
-
-> 简单来说awk就是把文件逐行的读入，以空格为默认分隔符将每行切片，切开的部分再进行各种分析处理。
 
 ### 工作原理
 ```
@@ -31,12 +32,12 @@ RS 记录分隔符（默认是一个换行符）
 
 ARGC 命令行参数的数目。
 ARGV 包含命令行参数的数组。
+ENVIRON 环境变量关联数组。
+FILENAME awk浏览的文件名。
 ARGIND 命令行中当前文件的位置（从0开始算）。
 CONVFMT 数字转换格式（默认值为%.6g）。
-ENVIRON 环境变量关联数组。
 ERRNO 最后一个系统错误的描述。
 FIELDWIDTHS 字段宽度列表（用空格键分隔）。
-FILENAME 当前输入文件的名。
 FNR 同NR，但相对于当前文件。
 IGNORECASE 如果为真，则进行忽略大小写的匹配。
 
@@ -60,14 +61,20 @@ in      判断数组中是否存在某个字符(串)
 
 
 ### 用法示例
-* 读取文件第一行
+- 读取文件第一行
 ```
 $ awk 'NR==1; NR==2 {exit;}' <file_in>
 ```
 
-* 累加求和
+- 累加求和
 ```
 $ gawk '{ sum += $1 }; END { print sum}' <file>
+```
+
+- 筛选表格某一行, 并显示表头
+```
+# ps查看crond进程的状态
+$ ps aux | awk 'NR==1 {print;}; /crond/{print;}'
 ```
 
 ---

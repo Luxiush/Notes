@@ -108,13 +108,57 @@ Ctrl+q 解锁
 | :n1,n2s/p1/p2/g | 在n1到n2行内执行替换操作 |
 | :%s/p1/p2/g | 将文件中所有p1均用p2替换 |
 | :g/p1/s//p2/g | 同上 |
+| :%s/p1/p2/gc | 将文件中所有p1均用p2替换, 在替换的适合需要确认 |
 | shell切换 | . |
 | :!<shell_command> | 执行完 <shell_command> 后回到vim |
 | 分屏 | . |
 | :split | 上下分屏 |
-| :vsplit | 左右分屏 |
+| :v | 左右分屏 |
 | Ctrl+w+w | 按逆时针顺序在各个分屏之间跳转 |
+| tabnew | 新建一个tab |
 
+
+### 配置
+- 全局配置: /etc/vimrc
+- 用户配置: ~/.vimrc
+
+- 使配置文件生效: source ~/.vimrc
+
+```
+"高亮显示当前行
+set cursorline
+
+"高亮显示匹配的括号
+set showmatch
+
+"显示行号
+set nu
+
+"在缩进和遇到Tab键时使用空格替代
+set expandtab   "不替代: noexpandtab  
+
+"设置tba的宽度为4
+set tabstop=4
+
+"自动缩进
+se ai
+
+"统一缩进为4
+set softtabstop=4
+set shiftwidth=4
+
+
+"代码补全 <https://zhuanlan.zhihu.com/p/26156186>
+set completeopt=preview,menu   
+"如果你喜欢回车完成补全，而不是蛋疼的 <c-y> 只需要设置：
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+"如果你需要补全完成时预览窗口自动消失，可以设置：
+augroup complete
+    autocmd!
+    autocmd CompleteDone * pclose
+augroup end
+
+```
 
 ### Ref
 自带教程: `$ vimtutor`

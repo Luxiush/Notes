@@ -31,7 +31,7 @@
 
 ### 进程管理
 #### ps
-|  |  `ps -aux` 各列的含义 |
+|  |  `ps aux` 各列的含义 |
 |:---|:---|
 | USER | 所属用户  |
 | PID | 进程ID  |
@@ -61,8 +61,8 @@
 $ kill -KILL 1234
 ```
 
-|  | 常用信号 |
-|:---|:---
+|  | 常用信号 |  |
+|:---|:---|:---|
 | HUP  |   1  |  终端断线 |
 | INT  |   2  |  中断（同 Ctrl + C） |
 | QUIT |   3  |  退出（同 Ctrl + \） |
@@ -82,7 +82,7 @@ $ kill -KILL 1234
 
 ---
 ## grep
-文件搜索
+- 文件搜索
 ```
 $ grep <options> <pattern> <files>   
 $ grep '<要找的内容>' <目标文件>
@@ -115,67 +115,7 @@ $ grep -vwf file1 file2 # 统计file1中没有，file2中有的行
 ```
 
 
-## [sed(stream editor)]( https://en.wikipedia.org/wiki/Sed#Mode_of_operation )
-* 流编辑器
-
-### 工作原理:
-* 将文本逐行读取到`模式空间`(pattern space)中, 接着用sed命令(sed script)进行处理, 然后输出到屏幕开始下一行.
-* sed命令是<pattern,action>格式,相当于if语句,用于指明什么时候执行什么指令
-
-### 常用参数
-| 参数 | 说明 |
-|:---|:---|
-| -n | slient模式, 只输出被处理的行 |
-| -e | 多点编辑, 在同一行里执行多条命令 |
-| -f | 从文件读取sed命令 |
-| -i | in-place |
-| -r | 直接修改文件内容,不输出 |
-
-### [常用sed命令]( http://blog.csdn.net/wl_fln/article/details/7281986 )
-* 命令格式: [n1 [,n2]]function; n1,n2用于指定function执行的时机,通常为行号
-
-#### 常用函数
-| function | 说明 |
-|:---|:---|
-| a | 在当前行之后插入文本 |
-| i | 在当前行之前插入文本 |
-| c | 替换指定的行 |
-| s | 替换指定字符 |
-| n | 读入下一行 |
-| r <file> | 从file中读取 |
-| w <file> | 写文件 |
-| p | 打印行 |
-| q | 退出 |
-
-#### 替换标记
-| 标记 | 说明 |
-|:---|:---|
-| g | 替换行内所有匹配的字符 |
-| p | 打印行 |
-| w | 写入文件 |
-| \1 | 标记第i个匹配的子表达式 |
-| & | 标记整个表达式 |
-
-#### [用法实例]( http://man.linuxde.net/sed )
-| ... | ... | ... |
-|:---|:---|:---|
-| 追加 | sed '/^##/a\aaaa' | 在以##开头的行之后追加aaaa |
-| 删除 | sed '/^$d' file.name | 删除空白行 |
-| ... | sed '2d' file.name | 删除第2行 |
-| ... | sed '2,$d' file.name | 删除第2行到末行 |
-| ... | sed '/aaaa/d' file.name | 删除包含aaaa的行,aaaa可以为正则表达式 |
-| 替换 | sed 's/aaaa/bbbb/' file.name | 将行中的aaaa替换为bbbb,aaaa可以为正则表达式 |
-| ... | sed 's/aaaa/bbbb/g' file.name | 将行中所有的aaaa替换为bbbb |
-| ... | sed 's/aaaa/bbbb/3g' file.name | 从第3处匹配开始替换 |
-| ... | sed 's/aaaa/[&]/g' file.name | 将aaaa替换为[aaaa] |
-| ... | sed 's/\(aaa\)bbb/\1ccc/g' file.name | 将aaabbb替换为aaaccc |
-| 选定行的范围 | sed -n '/aaaa/,/bbbb/p' file.name | 输出在aaaa和bbbb所指定范围内的行 |
-| ... | sed -n '5,/aaaa/p' file.name | 输出从第5行开始到第一个包含aaaa的行之间的所有行 |
-| ... | sed '/mmm/,/nnn/s/aaa/bbb/g' file.name | 将mmm到nnn的所有行的aaa替换为bbb |
-| 下一行 | sed -n '/aaa/{n;p}' file.name | 输出包含aaa的行的下一行 |
-| 多重编辑 | sed -e '1,3d' -e 's/aaa/bbb/g' file.name | 删除1-3行,然后把其余行的aaa替换为bbb |
-
-## 查看文件命令
+## 文空查看命令
 
 ### head
 * 显示文档开头
@@ -307,6 +247,26 @@ $ ll <options> <directory>
 | -t | 按修改时间排序 |
 | -d | 只显示目录 |
 
+## ln
+- 创建链接
+```
+ln [option] [target] [link_name]
+```
+
+| . | . |
+|:---|:---|
+| -s | 软链接(symbolic) |
+| -b | 删除，覆盖以前建立的链接 |
+| -d | 允许超级用户制作目录的硬链接 |
+| -f | 强制执行 |
+| -i | 交互模式，文件存在则提示用户是否覆盖 |
+| -n | 把符号链接视为一般目录 |
+| -v | 显示详细的处理过程 |
+
+### 软连接 & 硬链接
+- 软链接:  (指针)
+- 硬链接: 不能对目录创建, 不可以跨文件系统 (引用)
+
 
 ## [xargs](http://blog.csdn.net/xifeijian/article/details/9286189)
 > xargs是给命令传递参数的一个过滤器，也是组合多个命令的一个工具。它把一个数据流分割为一些足够小的块，以方便过滤器和命令进行处理。
@@ -381,8 +341,9 @@ nohup命令可以将程序以忽略挂起信号的方式运行起来，被运行
 $ nohup <command> &
 ```
 
-## crontab
+## [crontab]( http://www.cnblogs.com/peida/archive/2013/01/08/2850483.html )
 设置定时任务
+
 
 
 ## [update-alternatives]( http://blog.csdn.net/jasonding1354/article/details/50470109 )
@@ -402,3 +363,71 @@ $ nohup <command> &
 
 ## expr
 布尔运算, 比较运算, 四则算术运算, 正则匹配, 表达式求值
+
+
+## [free]( https://www.cnblogs.com/coldplayerest/archive/2010/02/20/1669949.html )
+- 显示系统使用和空闲的内存情况，包括物理内存、交互区内存(swap)和内核缓冲区内存. 共享内存将被忽略.
+
+| 参数说明 |  |
+|:---|:---|
+| b,k,m,g | 设置显示的单位 |
+| h | 自动调整单位, 以适合人阅读 |
+| s <间隔秒数> | 持续观察 |
+
+```
+[root@SF1150 service]# free
+             total       used       free     shared    buffers     cached
+Mem:      32940112   30841684    2098428          0    4545340   11363424
+-/+ buffers/cache:   14932920   18007192
+Swap:     32764556    1944984   30819572
+```
+
+- 第二行(Mem): 是从OS角度来看的, total = used + free;
+<p> shared(被多个进程共享的内存), buffer(被OS buffer的内存), cached(被OS cached的内存). </p>
+
+- 第三行(buffer/cache): 从应用程序角度看到的系统内存使用情况.
+<p> used(即-buffers/cached), 表示应用程序认为系统被用掉的内存, = Mem used - Mem buffer - Mem cached. </p>
+<p> free(即+buffers/cached), 表示应用程序认为系统还有多少内存, = Mem free + Mem buffer + Mem cached. </p>
+
+- buffer & cache:
+buffer, 存放要输出到disk的数据;
+cache, 存放从disk读取到的数据;
+两者都由OS管理.
+
+
+## [apt & yum]( https://www.cnblogs.com/garinzhang/p/diff_between_yum_apt-get_in_linux.html )
+一般来说著名的linux系统基本上分两大类：
+1. RedHat系列：Redhat、`Centos`、Fedora等
+2. Debian系列：`Debian`、Ubuntu等
+
+### RedHat 系列
+1. 常见的安装包格式 rpm包,安装rpm包的命令是“rpm -参数”
+2. 包管理工具 `yum`
+
+| yum常用的命令 |  |
+|:---|:---|
+| yum install xxx  | 安装xxx软件 |
+| yum info xxx     | 查看xxx软件的信息 |
+| yum remove xxx   | 删除软件包 |
+| yum list         | 列出软件包 |
+| yum clean        | 清除缓冲和就的包 |
+| yum provides xxx | 以xxx为关键字搜索包（提供的信息为关键字） |
+| yum search xxx   | 搜索软件包（以名字为关键字） |
+
+### Debian系列
+1. 常见的安装包格式 deb包,安装deb包的命令是“dpkg -参数”
+2. 包管理工具 `apt-get`
+
+| apt-get常用命令 |  |
+|:---|:---|
+| sudo apt-get install <package> | 安装包 |
+| sudo apt-get install <package> --reinstall | 重新安装包 |
+| sudo apt-get -f install | 修复安装 |
+| sudo apt-get remove <package> | 删除包 |
+| sudo apt-get remove package --purge | 删除包，包括删除配置文件等 |
+| sudo apt-get update | 更新源 |
+| sudo apt-get upgrade | 更新已安装的包 |
+| sudo apt-get dist-upgrade | 升级系统 |
+| apt-cache search <package> | 搜索包 |
+| apt-cache show <package> | 获取包的相关信息，如说明、大小、版本等 |
+.

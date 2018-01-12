@@ -1,33 +1,46 @@
 ## 正则表达式
-ref: http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143193331387014ccd1040c814dee8b2164bb4f064cff000
-ref: http://www.runoob.com/regexp/regexp-syntax.html
+- <http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143193331387014ccd1040c814dee8b2164bb4f064cff000>
+- <http://www.runoob.com/regexp/regexp-syntax.html>
+- <http://www.cnblogs.com/huxi/archive/2010/07/04/1771073.html>
 
 用一种描述性的语言来给字符串定义一个规则
 
 ### 入门
 #### 基本语句
 ```
+    字符
 \               转意符
-\d              数字
-\w              字母或数字
-\s              匹配一个`空格`或`Tab`等`空白符`
-{n}             n个字符
-{n,m}           n到m个字符
-.               任意`一个`字符
-?               匹配前面的子表达式`零次`或`一次`
+.               任意任意`一个`字符
+[ ]             字符集(对应的位置可以是字符集中的任意字符), "^"开头表示取反
+
+    预定义字符集, 可以写在"[]"中
+\s              空白符` [<space>\t\n\r]
+\d              数字 [0-9]
+\w              单词字符 [0-9a-zA-Z_]
+\S              非空白符
+\D              非数字 [^0-9]
+\W              非单词字符
+
+    数量词, 用在字符或"()"之后
+*               匹配前面的子表达式`任意`次
 +               重复`至少`一次
-*               重复`任意`次
+?               匹配前面的子表达式`零次`或`一次`
+{n}             匹配n次
+{n,m}           n到m次
+{n,}            至少n次
+{,m}            最多m次
 
-A|B             A或者B
-
-^               行的`开头`
+    边界匹配
+^               字符串`开头`, 多行模式中匹配行的开头
+$               字符串`末尾`, 多行模式中匹配行的末尾
 ^\d             以数字开头
-$               行的`结尾`
 \d$             以数字结尾
 
-( )             子表达式
-[ ]             中括号表达式
-{ }             限定表达式
+    逻辑, 分组
+A|B             A或者B
+( )             分组
+\n             引用编号为n的分组匹配到的字符串
+
 ```
 
 
@@ -40,43 +53,84 @@ $               行的`结尾`
 [\u4e00-\u9fa5]           匹配`中文`
 
 ab+c      匹配 abc，abbc，abbbc，abbbbc ...
-ab*c      匹配 ac，abc，abbc，abbbc ... 
+ab*c      匹配 ac，abc，abbc，abbbc ...
+
+(\d+)\[a-zA-Z]+\1         匹配 12aaa12, 34fjigj54
+
 ```
 
 #### 贪婪 v.s. 非贪婪模式
+- 贪婪模式: 匹配`尽可能多`的字符, [0-9]+
+- 非贪婪模式: 匹配`尽可能少`的字符, [0-9]+?
 
 
-### 进阶(re库)
+### 进阶(re模块)
+
+```python
+# encoding: UTF-8
+import re
+
+# 将正则表达式编译成Pattern对象
+pattern = re.compile(r'hello')
+
+# 使用Pattern匹配文本，获得匹配结果，无法匹配时将返回None
+match = pattern.match('hello world!')
+
+if match:
+    # 使用group获得分组信息
+    print match.group()
+
+### 输出 ###
+# hello
+```
+
+#### complie
+- 将字符串形式的正则表达式编译为Pattern对象
+```
+re.compile(pattern[, FLAG])
+```
+FLAG的取值:
+    - re.I: 忽略大小写
+    - re.M: 多行模式, 改变'^'和'$'的行为
+    - re.X: 详细模式, 正则表达式可以是多行, 忽略空白字符
+
+
 
 #### match
-match（）函数只检测RE是不是在string的开始位置匹配，search()会扫描整个string查找匹配.
-也就是说match（）只有在0位置匹配成功的话才有返回.
-如果不是开始位置匹配成功的话，match()就返回none。
+match()只检测RE是不是在string的开始位置匹配, search()会扫描整个string查找匹配.
+也就是说match()只有在0位置匹配成功的话才有返回.
+如果不是开始位置匹配成功的话, match()就返回none.
 
 ```python
 import re
 s = r'\d\d-\w\w'
-str = "1244"
+string = "1244"
 
-if re.match(s, str):
+if re.match(s, string):
     print "matched"
 else:
     print "failed"
+
+### 输出: failed
 ```
 
 #### search
-search()会扫描整个字符串并返回第一个成功的匹配
+search()扫描整个字符串并返回第一个成功的匹配
 
 #### findall
+以list的形式返回所有能够匹配到的子串
 
-
-#### finditer
-
+#### split
+```
+re.split(pattern, string[, max_split])
+```
+按照匹配到的字符串将string分割, max_split指定最大分割次数, 返回一个list
 
 #### sub
-> re.sub：使用给定的替换内容将匹配模式的子字符串（最左端并且非重叠的子字符串）替换掉
+- 使用给定的替换内容将匹配模式的子字符串(最左端并且非重叠的子字符串)**替换** 掉
+
 ```python
-    >>> re.sub(r'{name}', u'Jhon', u'Dear {name}') 
+    >>> re.sub(r'{name}', u'Jhon', u'Dear {name}')
     >>> 'Dear Jhon'
 ```
 
