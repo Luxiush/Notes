@@ -108,6 +108,7 @@ Ctrl+q 解锁
 | :n1,n2s/p1/p2/g | 在n1到n2行内执行替换操作 |
 | :%s/p1/p2/g | 将文件中所有p1均用p2替换 |
 | :g/p1/s//p2/g | 同上 |
+| :g/^".*/d | 删除以"开头的行 |
 | :%s/p1/p2/gc | 将文件中所有p1均用p2替换, 在替换的适合需要确认 |
 | shell切换 | . |
 | :!<shell_command> | 执行完 <shell_command> 后回到vim |
@@ -117,6 +118,22 @@ Ctrl+q 解锁
 | Ctrl+w+w | 按逆时针顺序在各个分屏之间跳转 |
 | tabnew | 新建一个tab |
 
+### [自动补全]( https://easwy.com/blog/archives/advanced-vim-skills-auto-complete/ )
+- Ctrl-p, Ctr-n: 在当前缓冲区,其它缓冲区,以及当前文件所包含的头文件中查找以光标前关键字开始的单词, Ctrl-p(previous)向上选择, Ctrl-n(next)向下选择. 
+
+| 常用补全方式 |．｜
+|:---|:---|
+| 整行补全 | CTRL-X CTRL-L |
+| 根据当前文件里关键字补全      | CTRL-X CTRL-N |
+| 根据字典补全                  | CTRL-X CTRL-K |
+| 根据同义词字典补全            | CTRL-X CTRL-T |
+| 根据头文件内关键字补全        | CTRL-X CTRL-I |
+| 根据标签补全                  | CTRL-X CTRL-] |
+| 补全文件名                    | CTRL-X CTRL-F |
+| 补全宏定义                    | CTRL-X CTRL-D |
+| 补全vim命令                   | CTRL-X CTRL-V |
+| 用户自定义补全方式            | CTRL-X CTRL-U |
+| 拼写建议                      | CTRL-X CTRL-S | 
 
 ### 配置
 - 全局配置: /etc/vimrc
@@ -141,7 +158,9 @@ set expandtab   "不替代: noexpandtab
 set tabstop=4
 
 "自动缩进
-se ai
+set ai
+set smartindent " 开启新行时使用智能自动缩进
+set backspace=indent,eol,start
 
 "统一缩进为4
 set softtabstop=4
