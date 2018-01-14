@@ -114,9 +114,16 @@ Ctrl+q 解锁
 | :!<shell_command> | 执行完 <shell_command> 后回到vim |
 | 分屏 | . |
 | :split | 上下分屏 |
-| :v | 左右分屏 |
-| Ctrl+w+w | 按逆时针顺序在各个分屏之间跳转 |
+| :vs | 左右分屏 |
+| Ctrl-w-w | 按逆时针顺序在各个分屏之间跳转 |
+| Ctrl-w-k,j,h,l | 在各个分屏之间跳转 |
+| Ctrl-w-<, Ctrl-w-> | 左右扩展 |
+| Ctrl-w-+, Ctrl-w-- | 上下扩展 |
+| Ctrl-w-= | 让所有分屏高度一致 | 
+| 多标签 | . |
 | tabnew | 新建一个tab |
+| gt(:tabp) | 前一个tab |
+| gT(:tabn) | 下一个tab | 
 
 ### [自动补全]( https://easwy.com/blog/archives/advanced-vim-skills-auto-complete/ )
 - Ctrl-p, Ctr-n: 在当前缓冲区,其它缓冲区,以及当前文件所包含的头文件中查找以光标前关键字开始的单词, Ctrl-p(previous)向上选择, Ctrl-n(next)向下选择. 
