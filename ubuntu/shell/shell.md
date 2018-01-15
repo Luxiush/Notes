@@ -430,4 +430,23 @@ cache, 存放从disk读取到的数据;
 | sudo apt-get dist-upgrade | 升级系统 |
 | apt-cache search <package> | 搜索包 |
 | apt-cache show <package> | 获取包的相关信息，如说明、大小、版本等 |
+
+
+## rz & sz
+- Linux/Unix同Windows进行ZModem文件传输的命令行工具
+
+```shell
+$ yum install lrzsz -y
+```
+
+### rz
+- recieve: xshell -> linux
+- 支持拖拽上传
+
+### sz
+- send: linux -> xshell
+
+
+
+
 .
