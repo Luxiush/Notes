@@ -14,9 +14,9 @@
 ## 安装 & 配置
 官网教程 https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
 
-配置文件: /etc/mongod.conf
-数据库文件: var/lib/mongodb
-日志文件: /var/log/mongodb/mongod.log
+- 配置文件: /etc/mongod.conf
+- 数据库文件: 安装时自动生成数据库文件目录为/var/lib/mongodb, 但是运行时的数据库目录却是`还没创建`的/data/db.
+- 日志文件: /var/log/mongodb/mongod.log
 
 ### 索引
 * 唯一强制字段`_id`, 并且会默认在该字段上建立索引
@@ -33,7 +33,7 @@
 * 灵活, nosql无需事先建立字段, 随时可以存储自定义的数据格式. 而sql增删字段非常麻烦, 尤其在数据量非常大的时候
 
 * 为什么要使用nosql: http://www.infoq.com/cn/news/2011/01/nosql-why
-> nosql系统是被设计用于成百上千台机器集群中的, 而非共享型数据库的架构. 
+> nosql系统是被设计用于成百上千台机器集群中的, 而非共享型数据库的架构.
 
 ---
 ## MongoDB v.s. MySql
@@ -46,6 +46,6 @@
 
 ### MySql的特点
 * 关系型数据库, 采用结构化的sql语句来处理数据
-* 需要预先定义数据结构schema. 
-* 有主键,外键等约束. 
-* 年代久远, 成熟, 配套设施(研发人员,社区等)完善. 
+* 需要预先定义数据结构schema.
+* 有主键,外键等约束.
+* 年代久远, 成熟, 配套设施(研发人员,社区等)完善.

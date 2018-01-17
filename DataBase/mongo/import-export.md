@@ -18,8 +18,11 @@ $ mongoexport -h IP -u 用户名 -p 密码 -d 数据库 -c 表名 -o <file_out>
 
 #### mongoimport
 * 导入数据
+> When importing JSON documents, each document must be a separate line of the input file.
+
 ```
 $ mongoimport -h IP -u 用户名 -p 密码 -d 数据库 -c 表名 --file <file_in>
+$ mongoimport --host myhost --db my_cms --collection docs < mydocfile.json  
 ```
 
 参数说明
