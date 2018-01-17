@@ -25,8 +25,23 @@
 
 ### 改变文件所有者/所属组
 * chown
+```
+$ chown [OPTION]... [OWNER][:[GROUP]] FILE...
+```
+
+| OPTION |  |
+|:---|:---|
+| -R | recursively |
+
 
 * chgrp
+```
+$ chgrp [OPTION]... GROUP FILE...
+```
+
+| OPTION |  |
+|:---|:---|
+| -R | recursively |
 
 
 ### 进程管理
@@ -234,7 +249,6 @@ $ find <查找目录> <参数> <匹配模型>
 $ ls <options> <directory or file>
 $ ll <options> <directory>
 ```
-
 常用参数
 
 | 参数 | 说明 |
@@ -246,6 +260,22 @@ $ ll <options> <directory>
 | -s | size,输出大小 |
 | -t | 按修改时间排序 |
 | -d | 只显示目录 |
+
+输出格式:
+```shell
+$ ll /etc
+权限 文件个数 owner  group  size(byte) date      文件名
+-rw-r--r-- 1 root    root     388 Jan 15 02:33 logrotate.status                                               
+drwxr-xr-x 2 root    root    4096 Sep 23  2011 misc                                                           
+drwxr-x--- 2 root    slocate 4096 Mar 12  2015 mlocate                                                        
+drwxr-xr-x 2 mongodb root    4096 Sep 19  2016 mongodb                                                        
+drwxr-xr-x 2 root    root    4096 Aug 23  2016 net-snmp                                                       
+drwx------ 3 nginx   nginx   4096 Dec 18 03:23 nginx                                                          x
+drwxr-xr-x 2 root    root    4096 Nov 26  2016 plymouth
+
+```
+
+权限格式: rwx(Owner)r-x(Group)r-x(Other)
 
 ## ln
 - 创建链接
@@ -406,13 +436,13 @@ cache, 存放从disk读取到的数据;
 
 | yum常用的命令 |  |
 |:---|:---|
+| yum search xxx   | 搜索软件包（以名字为关键字） |
 | yum install xxx  | 安装xxx软件 |
 | yum info xxx     | 查看xxx软件的信息 |
 | yum remove xxx   | 删除软件包 |
 | yum list         | 列出软件包 |
 | yum clean        | 清除缓冲和就的包 |
 | yum provides xxx | 以xxx为关键字搜索包（提供的信息为关键字） |
-| yum search xxx   | 搜索软件包（以名字为关键字） |
 
 ### Debian系列
 1. 常见的安装包格式 deb包,安装deb包的命令是“dpkg -参数”
@@ -445,6 +475,31 @@ $ yum install lrzsz -y
 
 ### sz
 - send: linux -> xshell
+
+
+
+## curl
+- 与wget类似.
+- curl是一个向服务器传输数据的工具.
+- 支持http、https、ftp、ftps、scp、sftp、tftp、telnet等协议.
+
+### 常用参数
+<http://blog.csdn.net/lansesl2008/article/details/14523303>
+
+$ curl [options] <url>
+```
+-o, --output <file> Write to file instead of stdout
+ -C, --continue-at <offset> Resumed transfer offset
+ -b, --cookie <data> Send cookies from string/file
+ -c, --cookie-jar <filename> Write cookies to <filename> after operation
+     --create-dirs   Create necessary local directory hierarchy
+ -d, --data <data>   HTTP POST data
+ -D, --dump-header <filename> Write the received headers to <filename>
+ -G, --get           Put the post data in the URL and use GET
+ -U, --proxy-user <user:password> Proxy user and password
+ -u, --user <user:password> Server user and password
+ -A, --user-agent <name> Send User-Agent <name> to server
+```
 
 
 
