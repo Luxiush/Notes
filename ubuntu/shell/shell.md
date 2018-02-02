@@ -64,6 +64,8 @@ $ chgrp [OPTION]... GROUP FILE...
 |:---|:---|
 | Z  | 僵尸进程  |
 | S  | 休眠  |
+| + | 位于后台 |
+| s | 包含子进程 |
 | D  | 无法中断的休眠状态(I/O)  |
 | T  | 停止  |
 | <  | 优先级较高  |
@@ -502,6 +504,21 @@ $ curl [options] <url>
 ```
 
 
+## 配置系统时间
+- 查看当前时间:
+```
+date
+```
 
+- 修改系统时区:
+```
+cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime   //亚洲上海时区替换系统时区
+```
+
+- 用ntp自动同步网络时间
+```
+yum install ntp # 安装
+ntpd # 启动ntp守护进程,自动同步时间
+```
 
 .
