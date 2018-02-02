@@ -87,3 +87,17 @@ $ ps aux | awk 'NR==1 {print;}; /crond/{print;}'
 ### 内置函数
 #### 字符串函数
 - sub, match, split, substr
+
+
+```c
+// 提取.c文件中函数的定义:
+/*
+int func(int a)
+{
+    ...
+}
+*/
+#! /usr/bin/awk
+
+
+```
