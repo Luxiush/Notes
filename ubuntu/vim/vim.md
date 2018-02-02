@@ -53,8 +53,11 @@ Ctrl+q 解锁
 | ngg | 文件第n行 |
 | G | 文件最后一行 |
 | H,M,L | 屏幕第一行,中间,最后一行 |
+| {,} | 上一空行, 下一空行 |
 | 翻屏 | . |
 | zz,zt,zb| 将`当前行`移动到屏幕中间,顶(top)端,底(bottom)端|
+| ctrl-u,d | 上,下滚半屏 |
+| ctrl-e,y | 上下滚一行 |
 | 插入 | . |
 | i,a | 在当前位置之前,后插入 |
 | I,A | 在当前行的行首,末插入 |
@@ -65,15 +68,14 @@ Ctrl+q 解锁
 | 删除/剪切 | . |
 | dd | 删除(剪切)整行 |
 | d$,dw | ...... |
-| J | 删除本行换行符, 和下一行合并 |
 | x | 剪切光标指向字符 |
 | nx | 剪切光标指向的后n个字符 |
+| J | 删除本行换行符, 和下一行合并 |
 | 改动(change) | 删除并进入插入模式 |
 | cw,c0,cG | ...... |
 | 复制 | . |
-| ye | 从光标位置复制到一个单词的末尾(不包括空格) |
-| yw | 同上, 但是包括空格 |
 | yy | 复制当前行到缓冲区 |
+| ye,yw,yb | ...... |
 | nyy | 复制n行到缓冲区 |
 | "y | 复制到操作系统剪贴板 |
 | "ny | 复制n行到操作系统剪贴板 |
@@ -87,9 +89,8 @@ Ctrl+q 解锁
 | ?pattern | 从光标开始处向`前`搜索pattern |
 | n | 在同一方向重复上一次搜索命令(下一个) |
 | N | 在反方向上重复上一次搜索命令(前一个) |
-| \< | 匹配一个单词的开头 |
-| \> | 匹配一个单词的结尾 |
-|  | . |
+| \<, \> | 匹配一个单词的开头,结尾 |
+| 撤销,恢复 | . |
 | u | `撤消`前一条命令的结果 |
 | Ctrl-r | `恢复`刚刚撤销的动作 |
 | . | `重复`最后一条修改正文的命令 |
@@ -101,11 +102,12 @@ Ctrl+q 解锁
 
 | 命令 | 说明 |
 |:---|:---|
-| q | 退出 |
-| q! | 放弃修改,强制退出 |
-| wq | 保存并退出 |
-| w | write,将修改写入原始文件 |
-| m,nw <file> | 将第m行至第n行的内容写入<file> |
+| :q | 退出 |
+| :q! | 放弃修改,强制退出 |
+| :qa | 关闭所有文件(a:all) |
+| :wq | 保存并退出 |
+| :w | write,将修改写入原始文件 |
+| :m,nw <file> | 将第m行至第n行的内容写入<file> |
 | :r | read |
 | :r <file_name> | 插入文件 |
 | :r! <command> | 插入<command>的输出 |
@@ -116,8 +118,8 @@ Ctrl+q 解锁
 | :n1,n2s/p1/p2/g | 在n1到n2行内执行替换操作 |
 | :%s/p1/p2/g | 将文件中所有p1均用p2替换 |
 | :g/p1/s//p2/g | 同上 |
+| :%s/p1/p2/gc | 将文件中所有p1均用p2替换, 在替换的时候需要确认 |
 | :g/^".*/d | 删除以"开头的行 |
-| :%s/p1/p2/gc | 将文件中所有p1均用p2替换, 在替换的适合需要确认 |
 | shell切换 | . |
 | :!<shell_command> | 执行完 <shell_command> 后回到vim |
 | 分屏 | . |
@@ -129,26 +131,21 @@ Ctrl+q 解锁
 | Ctrl-w-+, Ctrl-w-- | 上下扩展 |
 | Ctrl-w-= | 让所有分屏高度一致 |
 | 多标签 | . |
-| tabnew | 新建一个tab |
+| :tabnew | 新建一个tab |
 | gt(:tabp) | 前一个tab |
 | gT(:tabn) | 下一个tab |
+| 目录 | . |
+| :E, :Ve, Se | 打开目录 |
+
+### vim 宏
+- 在正常模式下（非insert模式、非visual模式）按下q键盘
+- 选择a-z或0-9中任意一个作为缓冲器的名字，准备开始录制宏
+- 正常的操作，此次所有的操作都会被记录在上一步中定义的缓冲器中
+- 在非insert模式下输入q停止宏的录制
+- 使用@ + 第二步中定义的缓冲器的名字即可
 
 ### [自动补全]( https://easwy.com/blog/archives/advanced-vim-skills-auto-complete/ )
 - Ctrl-p, Ctr-n: 在当前缓冲区,其它缓冲区,以及当前文件所包含的头文件中查找以光标前关键字开始的单词, Ctrl-p(previous)向上选择, Ctrl-n(next)向下选择.
-
-| 常用补全方式 |．｜
-|:---|:---|
-| 整行补全 | CTRL-X CTRL-L |
-| 根据当前文件里关键字补全      | CTRL-X CTRL-N |
-| 根据字典补全                  | CTRL-X CTRL-K |
-| 根据同义词字典补全            | CTRL-X CTRL-T |
-| 根据头文件内关键字补全        | CTRL-X CTRL-I |
-| 根据标签补全                  | CTRL-X CTRL-] |
-| 补全文件名                    | CTRL-X CTRL-F |
-| 补全宏定义                    | CTRL-X CTRL-D |
-| 补全vim命令                   | CTRL-X CTRL-V |
-| 用户自定义补全方式            | CTRL-X CTRL-U |
-| 拼写建议                      | CTRL-X CTRL-S |
 
 ### 配置
 - 全局配置: /etc/vimrc
@@ -197,8 +194,8 @@ augroup end
 ### Ref
 自带教程: `$ vimtutor`
 
-<https://www.jianshu.com/p/bcbe916f97e1>
+vim-galore-zh_cn: <https://github.com/wsdjeg/vim-galore-zh_cn#%E4%BB%80%E4%B9%88%E6%98%AF-vim>
 
-<https://github.com/wsdjeg/vim-galore-zh_cn#%E4%BB%80%E4%B9%88%E6%98%AF-vim>
+<https://www.jianshu.com/p/bcbe916f97e1>
 
 vim使用笔记: <http://www.cnblogs.com/jiqingwu/archive/2012/06/14/vim_notes.html>
