@@ -52,6 +52,7 @@
 | ... | sed 's/aaaa/bbbb/3g' file.name | 从第3处匹配开始替换 |
 | ... | sed 's/aaaa/[&]/g' file.name | 将aaaa替换为[aaaa] |
 | ... | sed 's/\(aaa\)bbb/\1ccc/g' file.name | 将aaabbb替换为aaaccc |
+| ... | sed 's/.$//' | 将DOS换行符(CRLF)替换成Unix格式 |
 | 选定行的范围 | sed -n '/aaaa/,/bbbb/p' file.name | 输出在aaaa和bbbb所指定范围内的行 |
 | ... | sed -n '5,/aaaa/p' file.name | 输出从第5行开始到第一个包含aaaa的行之间的所有行 |
 | ... | sed '/mmm/,/nnn/s/aaa/bbb/g' file.name | 将mmm到nnn的所有行的aaa替换为bbb |
