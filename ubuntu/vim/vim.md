@@ -119,6 +119,8 @@ Ctrl+q 解锁
 | :%s/p1/p2/g | 将文件中所有p1均用p2替换 |
 | :g/p1/s//p2/g | 同上 |
 | :%s/p1/p2/gc | 将文件中所有p1均用p2替换, 在替换的时候需要确认 |
+| :%s/cout/\/\/ &/gc | 将cout注释掉,(&标记整个表达式) |
+| :%s/aaa_\(bbb\)/\1/gc | 将aaa_bbb替换成bbb,(\1标记第一个子表达式) |
 | :g/^".*/d | 删除以"开头的行 |
 | shell切换 | . |
 | :!<shell_command> | 执行完 <shell_command> 后回到vim |
