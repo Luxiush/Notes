@@ -1,5 +1,9 @@
-/*leetcode binary-tree-level-order-traversal-ii*/
-/*二叉树的层次遍历*/
+/**
+## leetcode binary-tree-level-order-traversal-ii
+### 思路
+二叉树的层次遍历
+
+**/
 
 #include <iostream>
 #include <vector>
@@ -17,7 +21,7 @@ struct TreeNode {
     vector<vector<int> > levelOrderBottom(TreeNode *root) {
 		vector< vector<int> > res;
 		if(!root) return res;
-		
+
 		queue<TreeNode*> Q;
 		Q.push(root);
 		TreeNode* t;
@@ -41,11 +45,11 @@ struct TreeNode {
     vector<vector<int> > levelOrderBottom_2(TreeNode *root) {
         vector< vector<int> >res;
 		if(!root) return res;
-		
+
         vector<TreeNode*> current;
         vector<TreeNode*> next;
         current.push_back(root);
-        
+
         while(current.size()!=0){
             vector<int> value;
             for(int i=0; i<current.size(); ++i){
@@ -55,17 +59,17 @@ struct TreeNode {
 	                next.push_back(current[i]->right);
                 value.push_back(current[i]->val);
             }
-            
+
             res.insert(res.begin(), value);
-            
+
             current.clear();
             current.assign(next.begin(), next.end());
             next.clear();
         }
         return res;
     }
-	
-	
+
+
 
 int main(){
 	TreeNode* root = new TreeNode(3);
@@ -75,10 +79,10 @@ int main(){
 	root->left->right = new TreeNode(2);
 	root->right->left = new TreeNode(15);
 	root->right->right = new TreeNode(7);
-	
+
 	vector< vector<int> > res;
 	res = levelOrderBottom(root);
-	
+
 	for(int i=0; i<res.size(); ++i){
 		for(int j=0; j<res[i].size(); ++j){
 			cout<< res[i][j]<< " ";

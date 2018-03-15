@@ -1,4 +1,4 @@
-/*
+/**
 ## 求1+2+3+...+n
 ### 题目:
 求1+2+3+...+n，要求不能使用乘除法、for、while、if、else、switch、case等关键字及条件判断语句（A?B:C）。
@@ -12,7 +12,7 @@
 
 #### 类
 * 采用C++类中的static变量,以及构造函数在对象构造时会被自动调用的性质。
-*/
+**/
 #include <iostream>
 
 using namespace std;

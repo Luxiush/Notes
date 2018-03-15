@@ -1,3 +1,7 @@
+/**
+## 二叉树的各种遍历
+
+**/
 #include <iostream>
 #include <vector>
 #include <queue>
@@ -16,8 +20,8 @@ void preOrder(TreeNode* root, vector<int>& res){
 	if(!root) return;
 	stack<TreeNode*> S;
 	TreeNode* temp;
-	
-	S.push(root);	
+
+	S.push(root);
 	while(!S.empty()){
 		temp = S.top();
 		S.pop();
@@ -34,7 +38,7 @@ void postOrder(TreeNode* root, vector<int>& res){
 	stack< pair<TreeNode*, bool> > S;
 	TreeNode* temp;
 	bool visited;
-	
+
 	S.push(make_pair(root, false));
 	while(!S.empty()){
 		temp = S.top().first;
@@ -58,12 +62,12 @@ void inOrder(TreeNode* root, vector<int>& res){
 	stack< pair<TreeNode*, bool> > S;
 	TreeNode* temp;
 	bool visited;
-	
-	S.push(make_pair(root, false));	
+
+	S.push(make_pair(root, false));
 	while(!S.empty()){
 		temp = S.top().first;
-		visited = S.top().second;		
-		
+		visited = S.top().second;
+
 		if(!visited){
 			S.top().second = true;
 			if(temp->left)
@@ -94,12 +98,12 @@ int main(){
 	root->left->right = new TreeNode(2);
 	root->right->left = new TreeNode(15);
 	root->right->right = new TreeNode(7);
-	
+
 	vector<int> res;
 //	preOrder(root, res);
 //	postOrder(root, res);
 	inOrder(root, res);
-	
+
 	for(int i=0; i<res.size(); ++i){
 		cout<< res[i]<< " ";
 	}
