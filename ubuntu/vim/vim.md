@@ -134,6 +134,7 @@ Ctrl+q 解锁
 | Ctrl-w-= | 让所有分屏高度一致 |
 | 多标签 | . |
 | :tabnew | 新建一个tab |
+| :tabs | 查看所有tab列表, ngt跳转到第n个tab |
 | gt(:tabp) | 前一个tab |
 | gT(:tabn) | 下一个tab |
 | 目录 | . |
