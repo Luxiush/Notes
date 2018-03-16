@@ -96,7 +96,7 @@ $ kill -KILL 1234
 
 >任何一个进程，当其运行结束(exit)之后，其使用的所有资源和内存空间都会释放，以供其他进程使用；但其在OS内核的process table中仍旧保留一条记录，包含该进程的process ID，退出状态exit status，运行时间等信息。这些信息是方便该进程的父进程随时获取它的exit status(即子进程结束后为什么要进入zombie状态)。
 
-* 杀僵尸进程: 由于僵尸进程是死后每个给他收尸造成的, 所以一个办法是kill僵尸进程的父进程, 让僵尸进程变成孤儿进程, 过继给1号进程init清理.  --- <http://blog.51cto.com/6244685/1316234> 
+* 杀僵尸进程: 由于僵尸进程是死后每个给他收尸造成的, 所以一个办法是kill僵尸进程的父进程, 让僵尸进程变成孤儿进程, 过继给1号进程init清理.  --- <http://blog.51cto.com/6244685/1316234>
 
 
 ---
@@ -281,6 +281,10 @@ drwxr-xr-x 2 root    root    4096 Nov 26  2016 plymouth
 
 权限格式: rwx(Owner)r-x(Group)r-x(Other)
 
+## df
+查看磁盘使用情况
+
+
 ## ln
 - 创建链接
 ```
@@ -378,7 +382,26 @@ $ nohup <command> &
 ## [crontab]( http://www.cnblogs.com/peida/archive/2013/01/08/2850483.html )
 设置定时任务
 
+### 关于crond服务
+> crond是linux下用来周期性的执行某种任务或等待处理某些事件的一个守护进程，与windows下的计划任务类似，当安装完成操作系统后，默认会安装此服务工具，并且会自动启动crond进程，crond进程每分钟会定期检查是否有要执行的任务，如果有要执行的任务，则自动执行该任务。
 
+> Linux下的任务调度分为两类，系统任务调度和用户任务调度。
+
+### 相关配置
+- 日志文件: /var/log/cron
+- 系统任务调度: /etc/cron*
+- 用户任务调度: /var/spool/cron/<username>
+
+- crontab文件格式(/etc/crontab):
+```
+min hour day-of-month month day-of-week command-to-be-executed
+
+各个时间字段的特殊字符:
+    星号（*）：代表所有可能的值，例如month字段如果是星号，则表示在满足其它字段的制约条件后每月都执行该命令操作。
+    逗号（,）：可以用逗号隔开的值指定一个列表范围，例如，“1,2,5,7,8,9”
+    中杠（-）：可以用整数之间的中杠表示一个整数范围，例如“2-6”表示“2,3,4,5,6”
+    正斜线（/）：可以用正斜线指定时间的间隔频率，例如“0-23/2”表示每两小时执行一次。同时正斜线可以和星号一起使用，例如*/10，如果用在minute字段，表示每十分钟执行一次。
+```
 
 ## [update-alternatives]( http://blog.csdn.net/jasonding1354/article/details/50470109 )
 * 用于维护系统命令链接符
