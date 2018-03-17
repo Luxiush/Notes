@@ -238,9 +238,10 @@ $ find <查找目录> <参数> <匹配模型>
 | -mtime | +3 | 更改时间在3天以前 |
 | -size | +1000000c | 文件大小大于1M(1000000bytes) |
 | -type | d | 文件类型为d的目录文件 |
-| -type | I | 文件类型为|的链接文件 |
+| -type | l | 文件类型为l的链接文件 |
 | -type | f | 普通文件 |
 | -perm | 755 | 属性为755 |
+| -inum | <inode_number> | 通过文件的inode number 查找 |
 | -user | root | 属主为root |
 | -depth | ... | 广度优先遍历 |
 | -maxdepth | <int_number> | 设定递归搜索的目录层级, 1为当前目录(不递归) |
@@ -248,12 +249,12 @@ $ find <查找目录> <参数> <匹配模型>
 | -print0 | ... | 不换行 |
 
 
-## ll,ls
+## ls
 ```
 $ ls <options> <directory or file>
-$ ll <options> <directory>
 ```
-常用参数
+
+### 常用参数
 
 | 参数 | 说明 |
 |:---|:---|
@@ -261,25 +262,33 @@ $ ll <options> <directory>
 | -h | size in human readable |
 | -l | list format |
 | -r | reverse order |
+| -R | --recursive(递归子目录) |
 | -s | size,输出大小 |
 | -t | 按修改时间排序 |
 | -d | 只显示目录 |
 
-输出格式:
+### 输出格式:
 ```shell
-$ ll /etc
-权限 文件个数 owner  group  size(byte) date      文件名
+$ ls -l /etc
+属性  [第二列] owner  group  size(byte) date      文件名
 -rw-r--r-- 1 root    root     388 Jan 15 02:33 logrotate.status                                               
-drwxr-xr-x 2 root    root    4096 Sep 23  2011 misc                                                           
-drwxr-x--- 2 root    slocate 4096 Mar 12  2015 mlocate                                                        
-drwxr-xr-x 2 mongodb root    4096 Sep 19  2016 mongodb                                                        
-drwxr-xr-x 2 root    root    4096 Aug 23  2016 net-snmp                                                       
-drwx------ 3 nginx   nginx   4096 Dec 18 03:23 nginx                                                          x
+drwxr-xr-x 2 root    root    4096 Sep 23  2011 misc
+drwxr-x--- 2 root    slocate 4096 Mar 12  2015 mlocate
+drwxr-xr-x 2 mongodb root    4096 Sep 19  2016 mongodb
+drwxr-xr-x 2 root    root    4096 Aug 23  2016 net-snmp
+drwx------ 3 nginx   nginx   4096 Dec 18 03:23 nginx  
 drwxr-xr-x 2 root    root    4096 Nov 26  2016 plymouth
 
 ```
 
-权限格式: rwx(Owner)r-x(Group)r-x(Other)
+#### 属性(1+9): 
+- 类型(1): `-`表示普通文件, `d`表示目录, `l`表示软链接
+- 权限(9): rwx(Owner)r-x(Group)r-x(Other)
+
+#### [第二列] 
+- 如果目录, 则表示目录中的文件数, 空目录为2(. 和 ..)
+- 如果是文件, 则表示文件的`硬链接数`, 一般为1
+
 
 ## df
 查看磁盘使用情况
@@ -293,17 +302,36 @@ ln [option] [target] [link_name]
 
 | . | . |
 |:---|:---|
-| -s | 软链接(symbolic) |
+| -s | 软链接(symbolic), 符号链接 |
+| -P | 硬链接(physical) |
 | -b | 删除，覆盖以前建立的链接 |
 | -d | 允许超级用户制作目录的硬链接 |
 | -f | 强制执行 |
 | -i | 交互模式，文件存在则提示用户是否覆盖 |
 | -n | 把符号链接视为一般目录 |
-| -v | 显示详细的处理过程 |
 
 ### 软连接 & 硬链接
+#### 简而言之
 - 软链接:  (指针)
-- 硬链接: 不能对目录创建, 不可以跨文件系统 (引用)
+- 硬链接: (引用), 不能对目录创建, 不可以跨文件系统, 删除一个硬链接不会影响对其他硬链接的访问
+
+#### Details 
+##### 关于文件系统
+- 在unix系统中, 文件的存储分为两部分: 1)保存文件中数据的数据块, 2)保存文件的大小,创建日期,权限等`元数据`的索引节点(inode).
+- 硬盘格式化的时候, 操作系统自动将硬盘分成两个区域: 1)存放文件数据的数据区, 2)专门存放文件元数据的inode区.
+
+##### 关于inode和硬链接
+- 每个inode都有一个唯一的id, 用于标识不同文件, 移动和重命名文件不会改变inode id. 
+- 而文件名则只是一个便于用户记忆的inode"绰号", 一个文件可以有多个文件名, 一个文件名就相当于文件的一个`硬链接`.
+- 由于共用一个inode, 因此各个硬链接具有相同的文件按属性. 
+- 创建一个硬链接时, 对应inode中的`链接数`就会加1, 反之, 删除一个就减一, 当减到0时, 操作系统就会将inode号和与之对应的数据块回收. 
+
+##### 关于软链接
+- 本质是一个文件, 保存的是所指向文件的路径.
+
+##### ref: 
+- 理解inode: < http://www.ruanyifeng.com/blog/2011/12/inode.html >
+- Linux中的硬链接与软链接: <https://segmentfault.com/a/1190000010029786>
 
 
 ## [xargs](http://blog.csdn.net/xifeijian/article/details/9286189)
