@@ -334,9 +334,6 @@ ln [option] [target] [link_name]
 - Linux中的硬链接与软链接: <https://segmentfault.com/a/1190000010029786>
 - 多角度分析为什么linux的硬链接不能指向目录: < http://blog.csdn.net/longerzone/article/details/23870297 > 
 
-## df
-- 查看磁盘使用情况
-
 
 ## [xargs](http://blog.csdn.net/xifeijian/article/details/9286189)
 > xargs是给命令传递参数的一个过滤器，也是组合多个命令的一个工具。它把一个数据流分割为一些足够小的块，以方便过滤器和命令进行处理。
@@ -454,6 +451,10 @@ min hour day-of-month month day-of-week command-to-be-executed
 布尔运算, 比较运算, 四则算术运算, 正则匹配, 表达式求值
 
 
+## df
+- 查看磁盘使用情况
+
+
 ## [free]( https://www.cnblogs.com/coldplayerest/archive/2010/02/20/1669949.html )
 - 显示系统使用和空闲的内存情况，包括物理内存、交互区内存(swap)和内核缓冲区内存. 共享内存将被忽略.
 
@@ -464,11 +465,11 @@ min hour day-of-month month day-of-week command-to-be-executed
 | s <间隔秒数> | 持续观察 |
 
 ```
-[root@SF1150 service]# free
+[root@SF1150 ~]$ free -m
              total       used       free     shared    buffers     cached
-Mem:      32940112   30841684    2098428          0    4545340   11363424
--/+ buffers/cache:   14932920   18007192
-Swap:     32764556    1944984   30819572
+Mem:          3000       2000       1000         61        100        500
+-/+ buffers/cache:       1400       1600
+Swap:         4092        375       3717
 ```
 
 - 第二行(Mem): 是从OS角度来看的, total = used + free;
