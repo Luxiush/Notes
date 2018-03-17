@@ -234,6 +234,7 @@ $ find <查找目录> <参数> <匹配模型>
 | **参数** | **匹配模型** | **说明** |
 |:---|:---|:---|
 | -name | *.sh | 以.sh结尾 |
+| -regex | <pattern> | 用正则表达式匹配文件路径 |
 | -mtime | -5 | 更改时间在5天以内 |
 | -mtime | +3 | 更改时间在3天以前 |
 | -size | +1000000c | 文件大小大于1M(1000000bytes) |
@@ -270,29 +271,25 @@ $ ls <options> <directory or file>
 ### 输出格式:
 ```shell
 $ ls -l /etc
-属性  [第二列] owner  group  size(byte) date      文件名
--rw-r--r-- 1 root    root     388 Jan 15 02:33 logrotate.status                                               
+属性 硬链接数 owner  group  size(byte) date      文件名
+-rw-r--r-- 1 root    root     388 Jan 15 02:33 logrotate.status
 drwxr-xr-x 2 root    root    4096 Sep 23  2011 misc
 drwxr-x--- 2 root    slocate 4096 Mar 12  2015 mlocate
 drwxr-xr-x 2 mongodb root    4096 Sep 19  2016 mongodb
 drwxr-xr-x 2 root    root    4096 Aug 23  2016 net-snmp
 drwx------ 3 nginx   nginx   4096 Dec 18 03:23 nginx  
 drwxr-xr-x 2 root    root    4096 Nov 26  2016 plymouth
-
 ```
 
 #### 属性(1+9): 
 - 类型(1): `-`表示普通文件, `d`表示目录, `l`表示软链接
 - 权限(9): rwx(Owner)r-x(Group)r-x(Other)
 
-#### [第二列] 
-- 如果目录, 则表示目录中的文件数, 空目录为2(. 和 ..)
-- 如果是文件, 则表示文件的`硬链接数`, 一般为1
+#### 硬链接数
+- 目录的硬链接数等于目录中的子目录数量加2(.和..).
+- 每个目录都会保存一个其父目录的硬链接
 
-
-## df
-查看磁盘使用情况
-
+- 每创建一个目录, 在其父目录中会新增一个目录项, 用于将子目录的名称和子目录的inode关联起来. 同时, 新的目录中也会自动创建两个目录项, 分别将"..","."和父目录,当前目录关联起来. 
 
 ## ln
 - 创建链接
@@ -320,18 +317,25 @@ ln [option] [target] [link_name]
 - 在unix系统中, 文件的存储分为两部分: 1)保存文件中数据的数据块, 2)保存文件的大小,创建日期,权限等`元数据`的索引节点(inode).
 - 硬盘格式化的时候, 操作系统自动将硬盘分成两个区域: 1)存放文件数据的数据区, 2)专门存放文件元数据的inode区.
 
-##### 关于inode和硬链接
+##### inode和硬链接
 - 每个inode都有一个唯一的id, 用于标识不同文件, 移动和重命名文件不会改变inode id. 
 - 而文件名则只是一个便于用户记忆的inode"绰号", 一个文件可以有多个文件名, 一个文件名就相当于文件的一个`硬链接`.
 - 由于共用一个inode, 因此各个硬链接具有相同的文件按属性. 
 - 创建一个硬链接时, 对应inode中的`链接数`就会加1, 反之, 删除一个就减一, 当减到0时, 操作系统就会将inode号和与之对应的数据块回收. 
 
-##### 关于软链接
+##### 软链接
 - 本质是一个文件, 保存的是所指向文件的路径.
+
+##### 为什么不能为目录创建硬链接
+- 简单来说这样会破坏目录的树型结构, 产生循环, 导致循环引用.
 
 ##### ref: 
 - 理解inode: < http://www.ruanyifeng.com/blog/2011/12/inode.html >
 - Linux中的硬链接与软链接: <https://segmentfault.com/a/1190000010029786>
+- 多角度分析为什么linux的硬链接不能指向目录: < http://blog.csdn.net/longerzone/article/details/23870297 > 
+
+## df
+- 查看磁盘使用情况
 
 
 ## [xargs](http://blog.csdn.net/xifeijian/article/details/9286189)
