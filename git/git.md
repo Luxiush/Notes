@@ -41,7 +41,8 @@ $ git commit -a     #提交工作区自上次commit之后的变化到仓库区
 
 ### Repository ==> Index
 ```shell
-$ git reset <commit_id>        # 只更新到Index
+$ git reset --mixed <commit_id> # (默认) 只更新到Index
+$ git reset --soft <commit_id> # 撤销Repository, Index和WorkSpace不变
 $ git reset --hard <commit_id> # 同时更新WorkSpace
 ```
 
@@ -113,8 +114,23 @@ $ git rm <option> <file_name>
 | 没参数 | 同时删除工作区和暂存区 |
 | -r | 递归删除(用于删除文件夹) |
 | -f | force  |
-| --cached | 只删除暂存区 |
+| --cached | 只删除暂存区,通常用来撤销某个add |
 | -q | quiet, 不需要确认 |
+
+
+---
+## [代码回滚(checkout, reset, revert)]( https://www.cnblogs.com/houpeiyong/p/5890748.html )
+### checkout
+- 从Repository中切出某个文件, 放弃WorkSpace中的更改. 
+- 切换到其他分支.
+- 切换到任意的提交点, 通常用来查看历史版本.
+
+### revert
+- 撤销一个提交的同时会创建一个新的提交.
+- 比较安全, 不会重写(commit log).
+
+### reset
+- 将一个分支的末端(HEAD)指向另一个提交, 用来移除当前分支的一些提交.
 
 
 ---
