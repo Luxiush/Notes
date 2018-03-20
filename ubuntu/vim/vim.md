@@ -102,6 +102,8 @@ Ctrl+q 解锁
 
 | 命令 | 说明 |
 |:---|:---|
+| :e! | edit, 重新加载当前文档, 并放弃已做的改动 |
+| :e! <file | 放弃修改, 打开新的文件 |
 | :q | 退出 |
 | :q! | 放弃修改,强制退出 |
 | :qa | 关闭所有文件(a:all) |
@@ -139,6 +141,17 @@ Ctrl+q 解锁
 | gT(:tabn) | 下一个tab |
 | 目录 | . |
 | :E, :Ve, Se | 打开目录 |
+| 标记 | . |
+| ma,mb...mz | 标记光标所在位置 |
+| `a,`b,`,`z | 回到标记位置 |
+| ctrl+^ | 在最近两个缓冲区间切换 |
+| ctrl+i,o | go back, go forward |
+
+- [标记]( http://blog.csdn.net/u010956473/article/details/74087608 )
+
+- [gf]( https://stackoverflow.com/questions/3554719/find-a-file-via-recursive-directory-search-in-vim ): find-a-file-via-recursive-directory-search
+
+
 
 ### vim 宏
 - 在正常模式下（非insert模式、非visual模式）按下q键盘
