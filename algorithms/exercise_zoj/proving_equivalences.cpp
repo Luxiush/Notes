@@ -18,8 +18,12 @@ struct Edge{
 int edgeNum = 0;
 int vertexNum = 0;
 Edge edges[MAX_EDGE_NUM];
-int dfn[MAX_VERTEX_NUM];  // 初始化为-1;
+int dfn[MAX_VERTEX_NUM];        // 初始化为-1;
 int low[MAX_VERTEX_NUM];
+
+int distinctLow[MAX_VERTEX_NUM]; // 为1时表示在缩点后的图中, 初始化为0
+int in[MAX_VERTEX_NUM];          // 统计各点入度
+int out[MAX_VERTEX_NUM];         // 统计各点出度
 
 int _rec_depth;
 
@@ -31,11 +35,16 @@ void Init(){
     for(int i=0; i<vertexNum; i++){
         low[i] = INF;
     }
+
+    memset(distinctLow, 0, sizeof(distinctLow));
+    memset(in, 0, sizeof(in));
+    memset(out, 0, sizeof(out));
+
 }
 
 void _DFS(int root){
     // static int _rec_depth = 0;
-    printf("root:%d, _rec_depth:%d, dfn:%d, low:%d\n", root, _rec_depth, dfn[root], low[root]);
+    // printf("root:%d, _rec_depth:%d, dfn:%d, low:%d\n", root, _rec_depth, dfn[root], low[root]);
     if(dfn[root] != -1) return;
     dfn[root] = _rec_depth;
     low[root] = _rec_depth;
@@ -53,8 +62,8 @@ void _DFS(int root){
             }
         }
     }
-
-    printf("---_rec_depth:%d, root:%d, dfn:%d, low:%d\n", _rec_depth, root, dfn[root], low[root]);
+    
+    // printf("---_rec_depth:%d, root:%d, dfn:%d, low:%d\n", _rec_depth, root, dfn[root], low[root]);
 }
 
 void DFS(Edge*edges){
@@ -67,7 +76,7 @@ int main(){
     int testCases;
     scanf("%d", &testCases);
     while(testCases--){
-        printf("\n\n===================TestCase:%d\n", testCases);
+        // printf("\n\n===================TestCase:%d\n", testCases);
         scanf("%d %d", &vertexNum, &edgeNum);
         Init();
         // printf("vertexNum: %d, edgeNum: %d\n", vertexNum, edgeNum);
@@ -77,60 +86,51 @@ int main(){
             // 输入的节点下标从1开始, 改成从0开始
             edges[i].u -= 1;
             edges[i].v -= 1;
-            printf("edge: %d=>%d\n", edges[i].u, edges[i].v);
+            // printf("edge: %d=>%d\n", edges[i].u, edges[i].v);
         }
-        printf("aaaaaaa\n");
 
         DFS(edges);
 
-        printf("======dfn: \n");
+        // printf("======dfn: \n");
+        // for(int i=0; i<vertexNum; i++){
+        //     printf("%d\t", dfn[i]);
+        // }
+        // printf("\n");
+
+        // printf("======low: \n");
+        // for(int i=0; i<vertexNum; i++){
+        //     printf("%d\t", low[i]);
+        // }
+        // printf("\n");
+
+        // 统计缩点后的节点数
+        int lowNum = 0;
         for(int i=0; i<vertexNum; i++){
-            printf("%d\t", dfn[i]);
-        }
-        printf("\n");
-
-        printf("======low: \n");
-        for(int i=0; i<vertexNum; i++){
-            printf("%d\t", low[i]);
-        }
-        printf("\n");
-
-        //
-        int distinctLow[vertexNum]; // 为1时表示在缩点后的图中, 初始化为0
-        int in[vertexNum];          // 统计各点入度
-        int out[vertexNum];         // 统计各点出度
-        memset(distinctLow, 0, sizeof(distinctLow));
-        memset(in, 0, sizeof(in));
-        memset(out, 0, sizeof(out));
-
-        int lowNum = 0;     // 缩点后的总节点数
-        int inNum = 0;      // 入度为0的点数
-        int outNum = 0;     // 出度为0的点数
-        for(int i=0; i<edgeNum; i++){
-            int u = edges[i].u;
-            int v = edges[i].v;
-
-            if(!distinctLow[low[u]]){
-                distinctLow[low[u]] = 1;
+            if(!distinctLow[low[i]]){
+                distinctLow[low[i]] = 1;
                 lowNum ++;
             }
-            if(!distinctLow[low[v]]){
-                distinctLow[low[v]] = 1;
-                lowNum ++;
-            }
-
-            if(low[u] != low[v]){
-                in[low[v]] ++;
-                out[low[u]] ++;
-            }
-        }
-        printf("lowNum:%d\n", lowNum);
+        }   
+        // printf("lowNum:%d\n", lowNum);
 
         if(lowNum==1) {
             printf("0\n");
             continue;
         }
 
+        // 统计各个节点的出度和入度
+        for(int i=0; i<edgeNum; i++){
+            int u = edges[i].u;
+            int v = edges[i].v;
+
+            if(low[u] != low[v]){
+                in[low[v]] ++;
+                out[low[u]] ++;
+            }
+        }
+
+        int inNum = 0;      // 入度为0的点数
+        int outNum = 0;     // 出度为0的点数
         for(int i=0; i<vertexNum; i++){
             if(!distinctLow[i]) continue;
 
