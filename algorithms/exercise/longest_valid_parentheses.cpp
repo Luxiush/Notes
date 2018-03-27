@@ -6,7 +6,7 @@
 ### 思路
 去掉字符串中合法的序列，得到一个断点序列求各个断点之间的最长距离
 
-*/
+**/
 
     int longestValidParentheses(string s) {
         stack<int> S;
