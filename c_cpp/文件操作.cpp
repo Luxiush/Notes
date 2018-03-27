@@ -13,9 +13,9 @@ int main()
 	fout << "Now here.....";
 	fout << flush;
 	fout.close();
-	
+
 	return 0;
-} 
+}
 */
 
 
@@ -23,21 +23,21 @@ int main()
 #include <iostream>
 #include <cstdio>
 #include <string>
-using namespace std;  
+using namespace std;
 
-int main()  
+int main()
 {
     while(true)
     {
         string filepath;
         int length;
         FILE *source,*destination;
-        cout<<"ÇëÊäÈëÒª¸´ÖÆµÄÎÄ¼þÂ·¾¶(°üÀ¨Ö´ÐÐÎÄ¼þÃûºÍÎÄ¼þºó×ºÃû):\n";
+        cout<<"è¯·è¾“å…¥è¦å¤åˆ¶çš„æ–‡ä»¶è·¯å¾„(åŒ…æ‹¬æ‰§è¡Œæ–‡ä»¶åå’Œæ–‡ä»¶åŽç¼€å):\n";
         cin>>filepath;
         source = fopen(filepath.data(),"rb");
         if(source == NULL)
         {
-            cout<<"´ò¿ªÎÄ¼þÊ§°Ü!´ÓÐÂ";
+            cout<<"æ‰“å¼€æ–‡ä»¶å¤±è´¥!ä»Žæ–°";
             continue;
         }
         fseek(source,0,SEEK_END);
@@ -45,13 +45,13 @@ int main()
         char* data = new char[length];
         rewind(source);
         fread((void*)data,sizeof(char),length,source);
-        cout<<"ÇëÊäÈëÎÄ¼þÕ³ÌùÂ·¾¶(°üÀ¨Ö´ÐÐÎÄ¼þÃûºÍÎÄ¼þºó×ºÃû):\n";
+        cout<<"è¯·è¾“å…¥æ–‡ä»¶ç²˜è´´è·¯å¾„(åŒ…æ‹¬æ‰§è¡Œæ–‡ä»¶åå’Œæ–‡ä»¶åŽç¼€å):\n";
         cin>>filepath;
         destination = fopen(filepath.data(),"wb");
         if(destination == NULL)
         {
             delete data;
-            cout<<"Ð´ÈëÎÄ¼þÊ§°Ü!"<<endl;
+            cout<<"å†™å…¥æ–‡ä»¶å¤±è´¥!"<<endl;
             fclose(source);
             continue;
         }
@@ -59,9 +59,9 @@ int main()
         fclose(destination);
         fclose(source);
         delete data;
-        cout<<"¹Ø±ÕÎÄ¼þ³É¹¦"<<endl;
+        cout<<"å…³é—­æ–‡ä»¶æˆåŠŸ"<<endl;
         break;
     }
 
-    system("pause");  
+    system("pause");
 }
