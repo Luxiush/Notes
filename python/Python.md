@@ -175,6 +175,14 @@ def log(text):
         return wrapper
     return decorator
 
+def log(text):
+    def decorator(func):
+        def wrapper(*args, **kw):
+            print '%s %s():' % (text, func.__name__)
+            return func(*args, **kw)
+        return wrapper
+    return decorator
+
 ```
 
 
@@ -244,13 +252,22 @@ class Student(object):
 ```
 
 #### 元类(metaclass)
+<https://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000/001386820064557c69858840b4c48d2b8411bc2ea9099ba000>
 * 动态语言支持运行期间动态创建类
 * 先定义metaclass, 然后创建类, 最后创建实例. 可以把`类`看做是`metaclass`创建出来的`实例`.
-* metaclass继承自type, 构造函数为`__new__`
+* metaclass继承自type, 构造函数为`__new__()`
+* 在一个类实例化出一个对象的过程中, `__new__()`先于`__init__()`执行.
+
 ```
 # metaclass是创建类，所以必须从`type`类型派生：
 class ListMetaclass(type):
     def __new__(cls, name, bases, attrs):
+        '''
+        cls: 类似于self
+        name: 将要创建的类的名字
+        bases: 将要创建的类的基类
+        attrs: 属性(数据,方法), dict
+        '''
         attrs['add'] = lambda self, value: self.append(value)
         return type.__new__(cls, name, bases, attrs)
 
@@ -266,6 +283,32 @@ class MyList(list):
 #### 类方法&&实例方法
 * 类方法(\@classmethod)有点像c++类中的静态函数,不需要实例化即可调用, 而实例方法则类似c++中的普通成员函数,需要实例化才能调用
 
+
+#### [类属性&&实例属性](https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/0014319117128404c7dd0cf0e3c4d88acc8fe4d2c163625000)
+- 类属性: 在类声明时定义的属性, 有点像c++中的静态数据成员.
+- 实例属性: 通常是在__init__()中给self绑定的一些属性.
+
+- 类属性所有实例都可以访问, 而实例属性仅实例可以访问.
+- 实例属性会将相同名字的类属性屏蔽掉.
+
+```
+>>> class Student(object):
+...     name = 'Student'
+...
+>>> s = Student() # 创建实例s
+>>> print(s.name) # 打印name属性，因为实例并没有name属性，所以会继续查找class的name属性
+Student
+>>> print(Student.name) # 打印类的name属性
+Student
+>>> s.name = 'Michael' # 给实例绑定name属性
+>>> print(s.name) # 由于实例属性优先级比类属性高，因此，它会屏蔽掉类的name属性
+Michael
+>>> print(Student.name) # 但是类属性并未消失，用Student.name仍然可以访问
+Student
+>>> del s.name # 如果删除实例的name属性
+>>> print(s.name) # 再次调用s.name，由于实例的name属性没有找到，类的name属性就显示出来了
+Student
+```
 
 ---
 ## 进程和线程
