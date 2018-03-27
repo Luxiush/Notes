@@ -30,12 +30,13 @@ $ git add .               #添加当前目录
 $ git checkout -b <newBranch>               # 创建并切换分支
 $ git checkout <branchName>                 # 切换当前分支
 $ git checkout -b <newBranch> origin/master # 创建分支
+$ git checkout <branchName> <fileName>      # 从某个分支切出某个文件
 ```
 
 ### Index --> Repository
 ```shell
 $ git commit -m "[message]"
-$ git commit <file1><file2> -m "[message]"
+$ git commit <file1><file2> -m "[message]"  # 提交指定文件
 $ git commit -a     #提交工作区自上次commit之后的变化到仓库区
 ```
 
