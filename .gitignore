@@ -4,3 +4,6 @@
 *.txt
 *.in
 *.out
+
+*.swp
+*.swo
