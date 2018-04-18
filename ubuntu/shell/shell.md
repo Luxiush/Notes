@@ -445,6 +445,14 @@ min hour day-of-month month day-of-week command-to-be-executed
 |   | $ update-alternatives --remove <name> <path> |
 | config | 修改命令链接符的指向 |
 |   | $ update-alternatives --config <name> |
+    
+
+## service
+- 启动,停止服务
+
+## update-rc.d
+- 添加, 删除`/etc/init.d`目录下的服务
+
 
 
 ## expr
