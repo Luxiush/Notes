@@ -81,6 +81,7 @@ $ git push --delete origin <branchname> # 删除远程分支
 ```
 
 ### git merge
+合并
 ```shell
 $ git merge origin/<remoteBranchName>   # 在本地分支上合并远程分支
 $ git merge <branchName>                # 合并指定分支到当前分支
@@ -89,6 +90,16 @@ $ git merge <branchName>                # 合并指定分支到当前分支
 |      fast-forward合并      |           三方合并            |
 | :----------------------: | :-----------------------: |
 | ![](./img/merge-lin.png) | ![](./img/merge-3way.png) |
+
+
+### [git rebase](http://gitbook.liuhui998.com/4_2.html)
+衍合
+- merge是将两个分支的提交点按时间顺序重新排列，而rebase则是将两个分支进行拼接。
+- merge与rebase都能得到相同的结果。
+```
+git pull --rebase                       # 相当于先fetch再rebase
+git rebase <branchName>                 # 合并指定分支到当前分支
+```
 
 
 ### git diff
