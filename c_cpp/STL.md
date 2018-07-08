@@ -20,20 +20,28 @@
 ---
 ### map
 map的底层实现机制为红黑树, 红黑树的每个节点为一个pair对象保存`key`和`value`两个值, 节点之间根据key进行排序.
-map的大部分操作都是直接调用红黑树的接口来完成, 需要额外提供的就是一个key值之间的比较函数.
+map的大部分操作都是直接调用红黑树的接口来完成, 需要额外提供的就是一个key值之间的比较函数(operator<).
 
 
 ---
-### hash map
-* unordered_map
+### unordered_map
 * 基于hash实现
+* 需要定义hash_value函数并且重载operator==.
 
-#### [map和hash map]( https://www.zhihu.com/question/24506208 )
-* 首先map是基于红黑树实现的, 而hash map是基于哈希实现的, 所以map是`有序`的而hash map是`无序`的.
+#### [map和unordered_map]( https://www.zhihu.com/question/24506208 )
+* 首先map是基于红黑树实现的, 而hash map是基于哈希实现的, 所以map是`有序`的而hash map是`无序`的(根据哈希值进行排序).
 > the elements in the unordered_map are not sorted in any particular order with respect to either their key or mapped values, but organized into buckets depending on their hash values.
 
-* hash map由于是基于hash的,所以其查找复杂度是O(1), 但是在最坏情况下会达到O(N), 同时哈希函数也需要额外的时间特别是在key值非常长的时候, 而map基于红黑树, 其查找复杂度都是O(logN).
-* 另外, 由于需要维护一张hash表,所以其空间消耗会比较大.
+* unordered_map由于是基于hash的,所以其查找复杂度是O(1), 但是在最坏情况下会达到O(N)(很少见), 同时哈希函数也需要额外的时间特别是在key值非常长的时候, 而map基于红黑树, 其查找复杂度都是O(logN).
+
+* unordered_map需要维护一张hash表, map也需要通过额外的指针来维持树形结构. 如何选择需要就需要根据实际情况而定. 
+
+* map由于需要维护内部的有序性, 频繁的插入和删除操作会导致内存碎片化, 使得性能降低. 
+
+* 总的来说, unordered_map除了空间消耗较大, 不能自动排序外, 其他的都优于map. (仅个人观点)
+
+* [Is there any advantage of using map over unordered map in case of trivial keys]( https://stackoverflow.com/questions/2196995/is-there-any-advantage-of-using-map-over-unordered-map-in-case-of-trivial-keys )
+
 
 #### 关于hash
 ##### hash算法:
