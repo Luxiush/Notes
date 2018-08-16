@@ -126,6 +126,7 @@ $ grep <pattern1> <files> | grep <pattern2>  # 显示既匹配 pattern1 又匹�
 | -A | 同时输出最后一个匹配的后n行(after) |
 | -r | 递归查找 |
 | -R | 查找所有文件包含子目录 |
+| -l | 只显示文件名 |
 
 
 * 文件比较
