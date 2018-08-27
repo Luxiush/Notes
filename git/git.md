@@ -129,6 +129,13 @@ $ git rm <option> <file_name>
 | --cached | 只删除暂存区,通常用来撤销某个add |
 | -q | quiet, 不需要确认 |
 
+---
+## 补丁
+```
+$ git diff > <filename>                 # 根据diff生成补丁文件
+$ git apply --check <filename>	        # 应用之前检查补丁是否可以应用
+$ git apply <filename>			            # 应用补丁文件
+```
 
 ---
 ## [代码回滚(checkout, reset, revert)]( https://www.cnblogs.com/houpeiyong/p/5890748.html )
