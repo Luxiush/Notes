@@ -119,6 +119,7 @@ $ git show <commit_id>                   # 查看某次提交所做的�
 * 删除文件
 ```
 $ git rm <option> <file_name>
+$ git clean                              # 清除所有不在git仓库中的文件
 ```
 
 | option | usage |
@@ -131,10 +132,18 @@ $ git rm <option> <file_name>
 
 ---
 ## 补丁
+### diff&&apply
+<https://stackoverflow.com/questions/17152171/git-cannot-apply-binary-patch-without-full-index-line>
 ```
-$ git diff > <filename>                 # 根据diff生成补丁文件
+$ git diff --binary > <filename>        # 根据diff生成补丁文件
 $ git apply --check <filename>	        # 应用之前检查补丁是否可以应用
-$ git apply <filename>			            # 应用补丁文件
+$ git apply <filename>                  # 应用补丁文件
+```
+
+### chery-pick
+- 把另一个分支的一个或几个提交应用到当前分支
+```
+$ git chery-pick <commit_id1> <commit_id2>
 ```
 
 ---
