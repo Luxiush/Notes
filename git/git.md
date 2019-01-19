@@ -164,11 +164,17 @@ $ git chery-pick <commit_id1> <commit_id2>
 ---
 ## 其他操作
 ### 配置
-* 设置提交代码时的用户信息
+- 设置提交代码时的用户信息
 ```shell
 $ git config [--global] user.name "name"
 $ git config [--global] user.email "email"
 ```
+
+#### 配置文件
+- 系统配置文件: /etc/gitconfig
+- 用户配置文件: ~/.gitconfig
+- 项目配置: .git/config
+
 
 ### 新建仓库
 1. 方法1
