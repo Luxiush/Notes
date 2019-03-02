@@ -80,6 +80,13 @@ $ git branch -d <name>  # 删除本地分支
 $ git push --delete origin <branchname> # 删除远程分支
 ```
 
+### git worktree
+- 将分支检出到其他文件夹, 便于同时维护多个分支代码. 
+```shell
+$ git worktree list   # 查看所有worktree目录
+$ git worktree add -b <branch-name> <path> <commit_id> # 将<commit_id>检出到<path>, -b参数用于创建新分支
+```
+
 ### git merge
 合并
 ```shell
@@ -101,18 +108,31 @@ git pull --rebase                       # 相当于先fetch再rebase
 git rebase <branchName>                 # 合并指定分支到当前分支
 ```
 
-
 ### git diff
 ![](./img/diff.png)
+
 
 ---
 ## 文件操作
 ``` shell
 $ git ls-files                           # 查看已经追踪的文件文件
-$ git log [--graph]                      # 查看commit_id
 $ git mv <file-original> <file-renamed>  # 更改文件名
-$ git log --pretty=oneline <filename>    # 查看某个文件的修改历史
 $ git show <commit_id>                   # 查看某次提交所做的修改
+$ git status -s                          # 查看index简略信息
+```
+
+### git log
+查看提交记录
+```
+$ git log [--graph]                      # 查看commit_id
+# git log -[n]                           # 查看最近n调记录
+$ git log -p <filename>                  # 显示某个文件每次更改的diff信息
+$ git log --oneline <filename>           # 查看某个文件的修改历史
+$ git log --oneline                      # 查看log简略信息
+$ git log --name-only                    # 显示改动的文件
+$ git log --name-status                  # 显示文件的改动状态
+$ git log --grep <patten>                # 查找log信息
+$ git log --reverse                      # 将log倒序输出
 ```
 
 ### [git rm](https://git-scm.com/docs/git-rm)
