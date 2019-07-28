@@ -282,7 +282,7 @@ drwx------ 3 nginx   nginx   4096 Dec 18 03:23 nginx
 drwxr-xr-x 2 root    root    4096 Nov 26  2016 plymouth
 ```
 
-#### 属性(1+9): 
+#### 属性(1+9):
 - 类型(1): `-`表示普通文件, `d`表示目录, `l`表示软链接
 - 权限(9): rwx(Owner)r-x(Group)r-x(Other)
 
@@ -290,7 +290,7 @@ drwxr-xr-x 2 root    root    4096 Nov 26  2016 plymouth
 - 目录的硬链接数等于目录中的子目录数量加2(.和..).
 - 每个目录都会保存一个其父目录的硬链接
 
-- 每创建一个目录, 在其父目录中会新增一个目录项, 用于将子目录的名称和子目录的inode关联起来. 同时, 新的目录中也会自动创建两个目录项, 分别将"..","."和父目录,当前目录关联起来. 
+- 每创建一个目录, 在其父目录中会新增一个目录项, 用于将子目录的名称和子目录的inode关联起来. 同时, 新的目录中也会自动创建两个目录项, 分别将"..","."和父目录,当前目录关联起来.
 
 ## ln
 - 创建链接
@@ -313,16 +313,16 @@ ln [option] [target] [link_name]
 - 软链接:  (指针)
 - 硬链接: (引用), 不能对目录创建, 不可以跨文件系统, 删除一个硬链接不会影响对其他硬链接的访问
 
-#### Details 
+#### Details
 ##### 关于文件系统
 - 在unix系统中, 文件的存储分为两部分: 1)保存文件中数据的数据块, 2)保存文件的大小,创建日期,权限等`元数据`的索引节点(inode).
 - 硬盘格式化的时候, 操作系统自动将硬盘分成两个区域: 1)存放文件数据的数据区, 2)专门存放文件元数据的inode区.
 
 ##### inode和硬链接
-- 每个inode都有一个唯一的id, 用于标识不同文件, 移动和重命名文件不会改变inode id. 
+- 每个inode都有一个唯一的id, 用于标识不同文件, 移动和重命名文件不会改变inode id.
 - 而文件名则只是一个便于用户记忆的inode"绰号", 一个文件可以有多个文件名, 一个文件名就相当于文件的一个`硬链接`.
-- 由于共用一个inode, 因此各个硬链接具有相同的文件按属性. 
-- 创建一个硬链接时, 对应inode中的`链接数`就会加1, 反之, 删除一个就减一, 当减到0时, 操作系统就会将inode号和与之对应的数据块回收. 
+- 由于共用一个inode, 因此各个硬链接具有相同的文件按属性.
+- 创建一个硬链接时, 对应inode中的`链接数`就会加1, 反之, 删除一个就减一, 当减到0时, 操作系统就会将inode号和与之对应的数据块回收.
 
 ##### 软链接
 - 本质是一个文件, 保存的是所指向文件的路径.
@@ -330,10 +330,10 @@ ln [option] [target] [link_name]
 ##### 为什么不能为目录创建硬链接
 - 简单来说这样会破坏目录的树型结构, 产生循环, 导致循环引用.
 
-##### ref: 
+##### ref:
 - 理解inode: < http://www.ruanyifeng.com/blog/2011/12/inode.html >
 - Linux中的硬链接与软链接: <https://segmentfault.com/a/1190000010029786>
-- 多角度分析为什么linux的硬链接不能指向目录: < http://blog.csdn.net/longerzone/article/details/23870297 > 
+- 多角度分析为什么linux的硬链接不能指向目录: < http://blog.csdn.net/longerzone/article/details/23870297 >
 
 
 ## [xargs](http://blog.csdn.net/xifeijian/article/details/9286189)
@@ -446,7 +446,7 @@ min hour day-of-month month day-of-week command-to-be-executed
 |   | $ update-alternatives --remove <name> <path> |
 | config | 修改命令链接符的指向 |
 |   | $ update-alternatives --config <name> |
-    
+
 
 ## service
 - 启动,停止服务
@@ -527,8 +527,17 @@ cache, 存放从disk读取到的数据;
 | sudo apt-get update | 更新源 |
 | sudo apt-get upgrade | 更新已安装的包 |
 | sudo apt-get dist-upgrade | 升级系统 |
+| | |
+| apt-cache |  |
+| apt-cache pkgnames | 显示所有已安装的包 |
 | apt-cache search <package> | 搜索包 |
 | apt-cache show <package> | 获取包的相关信息，如说明、大小、版本等 |
+| | |
+| dpkg | |
+| dpkg -i | (install)安装deb包|
+| dpkg -l | list |
+| dpkg -L <package> | 显示包所拥有的文件 |
+| dpkg -r | remove |
 
 
 ## rz & sz
@@ -570,6 +579,18 @@ $ curl [options] <url>
  -A, --user-agent <name> Send User-Agent <name> to server
 ```
 
+## export
+- 设置或显示环境变量
+> 在shell中执行程序时，shell会提供一组环境变量。export可新增，修改或删除环境变量，供后续执行的程序使用。export的效力`仅限于`该次登陆操作。
+
+
+## dirname & basename
+- dirname:　返回给定绝对路径的路径信息
+- basename: 返回给定绝对路径的文件名
+```
+$ dirname include/lib/test.h  # include/lib
+$ basename include/lib/test.h # test.h
+```
 
 ## 配置系统时间
 - 查看当前时间:
@@ -587,5 +608,14 @@ cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime   //亚洲上海时区替换
 yum install ntp # 安装
 ntpd # 启动ntp守护进程,自动同步时间
 ```
+
+## 网络配置
+### 配置文件
+/etc/sysconfig/network
+/etc/sysconfig/network-scripts/ifcfg-xxxxx
+
+### ifconfig
+
+### route
 
 .
