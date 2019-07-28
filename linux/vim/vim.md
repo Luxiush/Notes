@@ -103,7 +103,7 @@ Ctrl+q 解锁
 | 命令 | 说明 |
 |:---|:---|
 | :e! | edit, 重新加载当前文档, 并放弃已做的改动 |
-| :e! <file | 放弃修改, 打开新的文件 |
+| :e! <file_name> | 放弃修改, 打开新的文件 |
 | :q | 退出 |
 | :q! | 放弃修改,强制退出 |
 | :qa | 关闭所有文件(a:all) |
@@ -113,6 +113,7 @@ Ctrl+q 解锁
 | :r | read |
 | :r <file_name> | 插入文件 |
 | :r! <command> | 插入<command>的输出 |
+| :o <file_name> | 打开文件 |
 | 可视化 | . |
 | :v | 可视化选择 |
 | 查找替换 | . |
@@ -142,7 +143,10 @@ Ctrl+q 解锁
 | 目录 | . |
 | :E, :Ve, Se | 打开目录 |
 | 标记 | . |
-| ma,mb...mz | 标记光标所在位置 |
+| ma,mb...mz | 标记光标所在位置(标记仅在当前文档有效) |
+| mA,mB...mZ | 设置全局标签(可以在文档间切换) |
+| :marks | 查看所有标签 |
+| :delmark a | 删除指定标签 |
 | `a,`b,`,`z | 回到标记位置 |
 | ctrl+^ | 在最近两个缓冲区间切换 |
 | ctrl+i,o | go back, go forward |
@@ -152,6 +156,19 @@ Ctrl+q 解锁
 - [gf]( https://stackoverflow.com/questions/3554719/find-a-file-via-recursive-directory-search-in-vim ): find-a-file-via-recursive-directory-search
 
 
+
+### ctag
+- See `:help ctag` for more information.
+
+| command | description |
+|:---|:---|
+| Ctrl-] | ... |
+| Ctrl-T | ... |
+| :ts[elect] `indent` | List the tags that match `indent` |
+| :tn[next] | Jump to next matching tag |
+| :tp[revious] | Jump to previous matching tag |
+| :tf[irst] | Jump to first matching tag |
+| :tl[ast] | Jump to last matching tag |
 
 ### vim 宏
 - 在正常模式下（非insert模式、非visual模式）按下q键盘
