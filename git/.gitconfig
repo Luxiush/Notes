@@ -11,4 +11,7 @@
     cko = checkout
     br = branch
 
-
+[core]
+	autocrlf = false
+	safecrlf = true
+    editor = vim
