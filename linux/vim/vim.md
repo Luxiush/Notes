@@ -148,6 +148,9 @@ Ctrl+q 解锁
 | :marks | 查看所有标签 |
 | :delmark a | 删除指定标签 |
 | `a,`b,`,`z | 回到标记位置 |
+| 缓冲区(buffers) | .  |
+| buffers | 查看缓冲区 |
+| b[n] | 切换到第[n]个缓冲区 | 
 | ctrl+^ | 在最近两个缓冲区间切换 |
 | ctrl+i,o | go back, go forward |
 
