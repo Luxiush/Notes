@@ -87,4 +87,13 @@ bind-key / select-window -l
 ### 关于tmux乱码
 tmux, 乱码已成往事: <http://popozhu.github.io/2013/11/06/tmux%EF%BC%8C%E4%B9%B1%E7%A0%81%E5%B7%B2%E6%88%90%E5%BE%80%E4%BA%8B/>
 
+
+
+### ...
+- 在多个pane之间同步操作
+```
+:setw synchronize-panes
+```
+这是一个开关,需要的时候键入, 不需要的时候键入同样的指令,即可关闭.
+
 .
