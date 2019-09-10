@@ -77,6 +77,11 @@ $ gawk '{ sum += $1 }; END { print sum}' <file>
 $ ps aux | awk 'NR==1 {print;}; /crond/{print;}'
 ```
 
+```
+# 获取git当前所在分支
+$ git branch | awk '/\*/ {print $2}'
+```
+
 ---
 --- 太过复杂的任务, 完全可以用python来完成 ---
 

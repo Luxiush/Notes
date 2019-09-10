@@ -149,6 +149,7 @@ $ grep <pattern1> <files> | grep <pattern2>  # 显示既匹配 pattern1 又匹�
 | -A | 同时输出最后一个匹配的后n行(after) |
 | -r | 递归查找 |
 | -R | 查找所有文件包含子目录 |
+| -l | 只显示文件名 |
 
 
 * 文件比较
@@ -483,6 +484,14 @@ min hour day-of-month month day-of-week command-to-be-executed
 $ sudo update-alternatives --install /usr/bin/java java /opt/java/jdk1.6.0_27/bin/java 1062
 ```
 
+## service
+- 启动,停止服务
+
+## update-rc.d
+- 添加, 删除`/etc/init.d`目录下的服务
+
+
+
 ## expr
 布尔运算, 比较运算, 四则算术运算, 正则匹配, 表达式求值
 
@@ -562,8 +571,17 @@ cache, 存放从disk读取到的数据;
 | sudo apt-get update | 更新源 |
 | sudo apt-get upgrade | 更新已安装的包 |
 | sudo apt-get dist-upgrade | 升级系统 |
+| | |
+| apt-cache |  |
+| apt-cache pkgnames | 显示所有已安装的包 |
 | apt-cache search <package> | 搜索包 |
 | apt-cache show <package> | 获取包的相关信息，如说明、大小、版本等 |
+| | |
+| dpkg | |
+| dpkg -i | (install)安装deb包|
+| dpkg -l | list |
+| dpkg -L <package> | 显示包所拥有的文件 |
+| dpkg -r | remove |
 
 
 ## 初始化配置
@@ -673,6 +691,18 @@ $ curl [options] <url>
  -A, --user-agent <name> Send User-Agent <name> to server
 ```
 
+## export
+- 设置或显示环境变量
+> 在shell中执行程序时，shell会提供一组环境变量。export可新增，修改或删除环境变量，供后续执行的程序使用。export的效力`仅限于`该次登陆操作。
+
+
+## dirname & basename
+- dirname:　返回给定绝对路径的路径信息
+- basename: 返回给定绝对路径的文件名
+```
+$ dirname include/lib/test.h  # include/lib
+$ basename include/lib/test.h # test.h
+```
 
 ## 配置系统时间
 - 查看当前时间:
@@ -690,5 +720,14 @@ cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime   //亚洲上海时区替换
 yum install ntp # 安装
 ntpd # 启动ntp守护进程,自动同步时间
 ```
+
+## 网络配置
+### 配置文件
+/etc/sysconfig/network
+/etc/sysconfig/network-scripts/ifcfg-xxxxx
+
+### ifconfig
+
+### route
 
 .

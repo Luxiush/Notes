@@ -4,3 +4,14 @@
 	diff = auto
 	branch = auto
 	interactive = auto
+
+[alias]
+    sta = status
+    cmt = commit
+    cko = checkout
+    br = branch
+
+[core]
+	autocrlf = false
+	safecrlf = true
+    editor = vim

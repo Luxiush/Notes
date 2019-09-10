@@ -81,7 +81,15 @@ $ git branch -d <name>  # 删除本地分支
 $ git push --delete origin <branchname> # 删除远程分支
 ```
 
+### git worktree
+- 将分支检出到其他文件夹, 便于同时维护多个分支代码. 
+```shell
+$ git worktree list   # 查看所有worktree目录
+$ git worktree add -b <branch-name> <path> <commit_id> # 将<commit_id>检出到<path>, -b参数用于创建新分支
+```
+
 ### git merge
+合并
 ```shell
 $ git merge origin/<remoteBranchName>   # 在本地分支上合并远程分支
 $ git merge <branchName>                # 合并指定分支到当前分支
@@ -92,23 +100,47 @@ $ git merge <branchName>                # 合并指定分支到当前分支
 | ![](./img/merge-lin.png) | ![](./img/merge-3way.png) |
 
 
+### [git rebase](http://gitbook.liuhui998.com/4_2.html)
+衍合
+- merge是将两个分支的提交点按时间顺序重新排列，而rebase则是将两个分支进行拼接。
+- merge与rebase都能得到相同的结果。
+```
+git pull --rebase                       # 相当于先fetch再rebase
+git rebase <branchName>                 # 合并指定分支到当前分支
+```
+
 ### git diff
 ![](./img/diff.png)
+
 
 ---
 ## 文件操作
 ``` shell
 $ git ls-files                           # 查看已经追踪的文件文件
-$ git log [--graph]                      # 查看commit_id
 $ git mv <file-original> <file-renamed>  # 更改文件名
-$ git log --pretty=oneline <filename>    # 查看某个文件的修改历史
 $ git show <commit_id>                   # 查看某次提交所做的修改
+$ git status -s                          # 查看index简略信息
+```
+
+### git log
+查看提交记录
+```
+$ git log [--graph]                      # 查看commit_id
+# git log -[n]                           # 查看最近n调记录
+$ git log -p <filename>                  # 显示某个文件每次更改的diff信息
+$ git log --oneline <filename>           # 查看某个文件的修改历史
+$ git log --oneline                      # 查看log简略信息
+$ git log --name-only                    # 显示改动的文件
+$ git log --name-status                  # 显示文件的改动状态
+$ git log --grep <patten>                # 查找log信息
+$ git log --reverse                      # 将log倒序输出
 ```
 
 ### [git rm](https://git-scm.com/docs/git-rm)
 * 删除文件
 ```
 $ git rm <option> <file_name>
+$ git clean                              # 清除所有不在git仓库中的文件
 ```
 
 | option | usage |
@@ -119,6 +151,21 @@ $ git rm <option> <file_name>
 | --cached | 只删除暂存区,通常用来撤销某个add |
 | -q | quiet, 不需要确认 |
 
+---
+## 补丁
+### diff&&apply
+<https://stackoverflow.com/questions/17152171/git-cannot-apply-binary-patch-without-full-index-line>
+```
+$ git diff --binary > <filename>        # 根据diff生成补丁文件
+$ git apply --check <filename>	        # 应用之前检查补丁是否可以应用
+$ git apply <filename>                  # 应用补丁文件
+```
+
+### chery-pick
+- 把另一个分支的一个或几个提交应用到当前分支
+```
+$ git chery-pick <commit_id1> <commit_id2>
+```
 
 ---
 ## [代码回滚(checkout, reset, revert)]( https://www.cnblogs.com/houpeiyong/p/5890748.html )
@@ -138,11 +185,17 @@ $ git rm <option> <file_name>
 ---
 ## 其他操作
 ### 配置
-* 设置提交代码时的用户信息
+- 设置提交代码时的用户信息
 ```shell
 $ git config [--global] user.name "name"
 $ git config [--global] user.email "email"
 ```
+
+#### 配置文件
+- 系统配置文件: /etc/gitconfig
+- 用户配置文件: ~/.gitconfig
+- 项目配置: .git/config
+
 
 ### 新建仓库
 1. 方法1
