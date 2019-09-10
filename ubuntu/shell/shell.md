@@ -23,7 +23,24 @@
 | -f | 指定压缩文件 |
 | -t | 列出压缩文件的内容 |
 
-### 改变文件所有者/所属组
+```
+$tar -cf out.tar.gz in
+```
+
+### 用户/组管理
+linux 添加/删除用户和组: <http://www.cnblogs.com/xd502djj/archive/2011/11/23/2260094.html>
+#### 相关配置文件
+- /etc/passwd: 用户的配置文件
+- /etc/shadow: 用户影子口令文件
+- /etc/group: 组配置文件  (格式: 组名:密码:id:组成员)
+- /etc/gshadow: 组影子文件
+- /etc/skel: 一般是存放用户启动文件的目录，这个目录是由root权限控制，当我们添加用户时，这个目录下的文件自动复制到新添加的用户的HOME目录下；/etc/skel 目录下的文件都是隐藏文件，也就是类似.file格式的；我们可通过修改、添加、删除/etc/skel目录下的文件，来为用户提供一个统一、标准的、默认的用户环境；
+
+添加用户: adduser
+> By default, each user in Debian GNU/Linux  is  given  a  corresponding  group  with  the  same  name.
+
+
+#### 改变文件所有者/所属组
 * chown
 ```
 $ chown [OPTION]... [OWNER][:[GROUP]] FILE...
@@ -42,6 +59,12 @@ $ chgrp [OPTION]... GROUP FILE...
 | OPTION |  |
 |:---|:---|
 | -R | recursively |
+
+
+### 系统信息
+- /proc/ 目录
+> Linux 内核提供了一种通过 /proc 文件系统，在运行时访问内核内部数据结构、改变内核设置的机制。proc文件系统是一个伪文件系统，它只存在内存当中，而不占用外存空间。它以文件系统的方式为访问系统内核数据的操作提供接口。
+
 
 
 ### 进程管理
@@ -281,7 +304,7 @@ drwx------ 3 nginx   nginx   4096 Dec 18 03:23 nginx
 drwxr-xr-x 2 root    root    4096 Nov 26  2016 plymouth
 ```
 
-#### 属性(1+9): 
+#### 属性(1+9):
 - 类型(1): `-`表示普通文件, `d`表示目录, `l`表示软链接
 - 权限(9): rwx(Owner)r-x(Group)r-x(Other)
 
@@ -289,7 +312,7 @@ drwxr-xr-x 2 root    root    4096 Nov 26  2016 plymouth
 - 目录的硬链接数等于目录中的子目录数量加2(.和..).
 - 每个目录都会保存一个其父目录的硬链接
 
-- 每创建一个目录, 在其父目录中会新增一个目录项, 用于将子目录的名称和子目录的inode关联起来. 同时, 新的目录中也会自动创建两个目录项, 分别将"..","."和父目录,当前目录关联起来. 
+- 每创建一个目录, 在其父目录中会新增一个目录项, 用于将子目录的名称和子目录的inode关联起来. 同时, 新的目录中也会自动创建两个目录项, 分别将"..","."和父目录,当前目录关联起来.
 
 ## ln
 - 创建链接
@@ -312,16 +335,16 @@ ln [option] [target] [link_name]
 - 软链接:  (指针)
 - 硬链接: (引用), 不能对目录创建, 不可以跨文件系统, 删除一个硬链接不会影响对其他硬链接的访问
 
-#### Details 
+#### Details
 ##### 关于文件系统
 - 在unix系统中, 文件的存储分为两部分: 1)保存文件中数据的数据块, 2)保存文件的大小,创建日期,权限等`元数据`的索引节点(inode).
 - 硬盘格式化的时候, 操作系统自动将硬盘分成两个区域: 1)存放文件数据的数据区, 2)专门存放文件元数据的inode区.
 
 ##### inode和硬链接
-- 每个inode都有一个唯一的id, 用于标识不同文件, 移动和重命名文件不会改变inode id. 
+- 每个inode都有一个唯一的id, 用于标识不同文件, 移动和重命名文件不会改变inode id.
 - 而文件名则只是一个便于用户记忆的inode"绰号", 一个文件可以有多个文件名, 一个文件名就相当于文件的一个`硬链接`.
-- 由于共用一个inode, 因此各个硬链接具有相同的文件按属性. 
-- 创建一个硬链接时, 对应inode中的`链接数`就会加1, 反之, 删除一个就减一, 当减到0时, 操作系统就会将inode号和与之对应的数据块回收. 
+- 由于共用一个inode, 因此各个硬链接具有相同的文件按属性.
+- 创建一个硬链接时, 对应inode中的`链接数`就会加1, 反之, 删除一个就减一, 当减到0时, 操作系统就会将inode号和与之对应的数据块回收.
 
 ##### 软链接
 - 本质是一个文件, 保存的是所指向文件的路径.
@@ -329,10 +352,10 @@ ln [option] [target] [link_name]
 ##### 为什么不能为目录创建硬链接
 - 简单来说这样会破坏目录的树型结构, 产生循环, 导致循环引用.
 
-##### ref: 
+##### ref:
 - 理解inode: < http://www.ruanyifeng.com/blog/2011/12/inode.html >
 - Linux中的硬链接与软链接: <https://segmentfault.com/a/1190000010029786>
-- 多角度分析为什么linux的硬链接不能指向目录: < http://blog.csdn.net/longerzone/article/details/23870297 > 
+- 多角度分析为什么linux的硬链接不能指向目录: < http://blog.csdn.net/longerzone/article/details/23870297 >
 
 
 ## [xargs](http://blog.csdn.net/xifeijian/article/details/9286189)
@@ -360,6 +383,14 @@ $ cat > <file>.out
 * 输入重定向(<, <<)
 ```
 $ cat > <file>.out < <file>.in
+```
+
+每个 Unix/Linux 命令运行时都会打开三个文件: 0 标准输入（STDIN），1 标准输出（STDOUT），2 标准错误输出（STDERR）。
+```
+$ command 2> file  # 将STDERR重定向
+$ command > file 2>&1  # 将STDERR和STDOUT合并后重定向
+$ n >& m	# 将输出文件 m 和 n 合并
+$ command > /dev/null  # 屏蔽输出
 ```
 
 * 管道(|)
@@ -445,14 +476,27 @@ min hour day-of-month month day-of-week command-to-be-executed
 |   | $ update-alternatives --remove <name> <path> |
 | config | 修改命令链接符的指向 |
 |   | $ update-alternatives --config <name> |
+| display | 查看命令连接符的所有信息  |
 
+
+```
+$ sudo update-alternatives --install /usr/bin/java java /opt/java/jdk1.6.0_27/bin/java 1062
+```
 
 ## expr
 布尔运算, 比较运算, 四则算术运算, 正则匹配, 表达式求值
 
 
 ## df
+- disk free
 - 查看磁盘使用情况
+
+## du
+- disk usage
+
+## 添加新硬盘
+创建分区 => 格式化(创建文件系统) => 挂载
+fdisk   => mkfs             => mount
 
 
 ## [free]( https://www.cnblogs.com/coldplayerest/archive/2010/02/20/1669949.html )
@@ -520,6 +564,74 @@ cache, 存放从disk读取到的数据;
 | sudo apt-get dist-upgrade | 升级系统 |
 | apt-cache search <package> | 搜索包 |
 | apt-cache show <package> | 获取包的相关信息，如说明、大小、版本等 |
+
+
+## 初始化配置
+系统配置: /etc/profile
+用户配置: ~/.bashrc
+
+## 换源
+下载对应源的配置文件然后替换本地的`/etc/pat/sources.list`
+```
+$ vim /etc/apt/sources.list
+$ apt-get update
+```
+
+## 配置ip地址
+1. ifconfig, 临时配置, 重启后失效
+2. 修改配置文件, 永久配置
+  Centos: /etc/sysconfig/network-script/ifcfg-eth0
+  Ubuntu: /etc/network/interfaces
+
+## 路由表配置
+
+
+## 网关配置
+
+
+## 改hostname
+修改`/etc/hostname`
+同时`/etc/hosts`也要做对应修改
+
+## 配置DNS服务器
+/etc/resolvconf/resolv.conf.d/base
+
+```
+nameserver 10.8.8.8
+nameserver 8.8.8.8
+```
+
+或者: /etc/network/interfaces
+```
+dns-nameservers 8.8.8.8
+```
+
+更新: resolvconf -u
+
+
+## 重启网络服务
+sudo /etc/init.d/networking restart
+
+
+## 重启网卡
+ifconfig eth0 down
+ifconfig eth0 up
+
+
+
+
+
+## su切换到超级用户的时候报错
+> su: Authentication failure
+
+- Ubuntu 默认没有给root用户设置密码，当我们su root命令时， 提示认证失败，解决办法是给root用户设置密码:
+```
+sudo passwd root
+```
+
+
+## mount & umount
+
 
 
 ## rz & sz
