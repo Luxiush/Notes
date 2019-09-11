@@ -1,4 +1,10 @@
 ## vim
+### 一些参数:
+```
+$ vim filename +n          # 打开文档时跳到第n行
+$ vim filename +/pattern   # 打开文档时跳到第一个匹配的词
+```
+
 ### 常用插件:
  * vim-colors-solarized   配色
  * vim-ariline            增强的状态栏（类似powerline）
@@ -147,7 +153,7 @@ Ctrl+q 解锁
 | mA,mB...mZ | 设置全局标签(可以在文档间切换) |
 | :marks | 查看所有标签 |
 | :delmark a | 删除指定标签 |
-| `a,`b,`,`z | 回到标记位置 |
+| \`a, \`b, \`z | 回到标记位置 |
 | 缓冲区(buffers) | .  |
 | buffers | 查看缓冲区 |
 | b[n] | 切换到第[n]个缓冲区 | 
