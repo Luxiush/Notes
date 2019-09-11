@@ -183,6 +183,13 @@ Ctrl+q 解锁
 ### [自动补全]( https://easwy.com/blog/archives/advanced-vim-skills-auto-complete/ )
 - Ctrl-p, Ctr-n: 在当前缓冲区,其它缓冲区,以及当前文件所包含的头文件中查找以光标前关键字开始的单词, Ctrl-p(previous)向上选择, Ctrl-n(next)向下选择.
 
+
+### vim粘贴时格式混乱
+```
+:set paste
+:set nopaste
+```
+
 ### 配置
 - 全局配置: /etc/vimrc
 - 用户配置: ~/.vimrc

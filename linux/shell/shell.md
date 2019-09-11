@@ -23,7 +23,24 @@
 | -f | 指定压缩文件 |
 | -t | 列出压缩文件的内容 |
 
-### 改变文件所有者/所属组
+```
+$tar -cf out.tar.gz in
+```
+
+### 用户/组管理
+linux 添加/删除用户和组: <http://www.cnblogs.com/xd502djj/archive/2011/11/23/2260094.html>
+#### 相关配置文件
+- /etc/passwd: 用户的配置文件
+- /etc/shadow: 用户影子口令文件
+- /etc/group: 组配置文件  (格式: 组名:密码:id:组成员)
+- /etc/gshadow: 组影子文件
+- /etc/skel: 一般是存放用户启动文件的目录，这个目录是由root权限控制，当我们添加用户时，这个目录下的文件自动复制到新添加的用户的HOME目录下；/etc/skel 目录下的文件都是隐藏文件，也就是类似.file格式的；我们可通过修改、添加、删除/etc/skel目录下的文件，来为用户提供一个统一、标准的、默认的用户环境；
+
+添加用户: adduser
+> By default, each user in Debian GNU/Linux  is  given  a  corresponding  group  with  the  same  name.
+
+
+#### 改变文件所有者/所属组
 * chown
 ```
 $ chown [OPTION]... [OWNER][:[GROUP]] FILE...
@@ -42,6 +59,12 @@ $ chgrp [OPTION]... GROUP FILE...
 | OPTION |  |
 |:---|:---|
 | -R | recursively |
+
+
+### 系统信息
+- /proc/ 目录
+> Linux 内核提供了一种通过 /proc 文件系统，在运行时访问内核内部数据结构、改变内核设置的机制。proc文件系统是一个伪文件系统，它只存在内存当中，而不占用外存空间。它以文件系统的方式为访问系统内核数据的操作提供接口。
+
 
 
 ### 进程管理
@@ -363,6 +386,14 @@ $ cat > <file>.out
 $ cat > <file>.out < <file>.in
 ```
 
+每个 Unix/Linux 命令运行时都会打开三个文件: 0 标准输入（STDIN），1 标准输出（STDOUT），2 标准错误输出（STDERR）。
+```
+$ command 2> file  # 将STDERR重定向
+$ command > file 2>&1  # 将STDERR和STDOUT合并后重定向
+$ n >& m	# 将输出文件 m 和 n 合并
+$ command > /dev/null  # 屏蔽输出
+```
+
 * 管道(|)
 ```
 $ <command_1> | <command_2>
@@ -446,7 +477,12 @@ min hour day-of-month month day-of-week command-to-be-executed
 |   | $ update-alternatives --remove <name> <path> |
 | config | 修改命令链接符的指向 |
 |   | $ update-alternatives --config <name> |
+| display | 查看命令连接符的所有信息  |
 
+
+```
+$ sudo update-alternatives --install /usr/bin/java java /opt/java/jdk1.6.0_27/bin/java 1062
+```
 
 ## service
 - 启动,停止服务
@@ -461,7 +497,15 @@ min hour day-of-month month day-of-week command-to-be-executed
 
 
 ## df
+- disk free
 - 查看磁盘使用情况
+
+## du
+- disk usage
+
+## 添加新硬盘
+创建分区 => 格式化(创建文件系统) => 挂载
+fdisk   => mkfs             => mount
 
 
 ## [free]( https://www.cnblogs.com/coldplayerest/archive/2010/02/20/1669949.html )
@@ -538,6 +582,74 @@ cache, 存放从disk读取到的数据;
 | dpkg -l | list |
 | dpkg -L <package> | 显示包所拥有的文件 |
 | dpkg -r | remove |
+
+
+## 初始化配置
+系统配置: /etc/profile
+用户配置: ~/.bashrc
+
+## 换源
+下载对应源的配置文件然后替换本地的`/etc/pat/sources.list`
+```
+$ vim /etc/apt/sources.list
+$ apt-get update
+```
+
+## 配置ip地址
+1. ifconfig, 临时配置, 重启后失效
+2. 修改配置文件, 永久配置
+  Centos: /etc/sysconfig/network-script/ifcfg-eth0
+  Ubuntu: /etc/network/interfaces
+
+## 路由表配置
+
+
+## 网关配置
+
+
+## 改hostname
+修改`/etc/hostname`
+同时`/etc/hosts`也要做对应修改
+
+## 配置DNS服务器
+/etc/resolvconf/resolv.conf.d/base
+
+```
+nameserver 10.8.8.8
+nameserver 8.8.8.8
+```
+
+或者: /etc/network/interfaces
+```
+dns-nameservers 8.8.8.8
+```
+
+更新: resolvconf -u
+
+
+## 重启网络服务
+sudo /etc/init.d/networking restart
+
+
+## 重启网卡
+ifconfig eth0 down
+ifconfig eth0 up
+
+
+
+
+
+## su切换到超级用户的时候报错
+> su: Authentication failure
+
+- Ubuntu 默认没有给root用户设置密码，当我们su root命令时， 提示认证失败，解决办法是给root用户设置密码:
+```
+sudo passwd root
+```
+
+
+## mount & umount
+
 
 
 ## rz & sz

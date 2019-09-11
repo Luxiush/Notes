@@ -31,6 +31,7 @@ $ git checkout -b <newBranch>               # 创建并切换分支
 $ git checkout <branchName>                 # 切换当前分支
 $ git checkout -b <newBranch> origin/master # 创建分支
 $ git checkout <branchName> <fileName>      # 从某个分支切出某个文件
+$ git checkout <commit_id>                  # 切出指定版本
 ```
 
 ### Index --> Repository
@@ -42,7 +43,7 @@ $ git commit -a     #提交工作区自上次commit之后的变化到仓库区
 
 ### Repository ==> Index
 ```shell
-$ git reset --mixed <commit_id> # (默认) 只更新到Index
+$ git reset --mixed <commit_id> # (默认) 撤销Repository和Index
 $ git reset --soft <commit_id> # 撤销Repository, Index和WorkSpace不变
 $ git reset --hard <commit_id> # 同时更新WorkSpace
 ```
@@ -169,7 +170,7 @@ $ git chery-pick <commit_id1> <commit_id2>
 ---
 ## [代码回滚(checkout, reset, revert)]( https://www.cnblogs.com/houpeiyong/p/5890748.html )
 ### checkout
-- 从Repository中切出某个文件, 放弃WorkSpace中的更改. 
+- 从Repository中切出某个文件, 放弃WorkSpace中的更改.
 - 切换到其他分支.
 - 切换到任意的提交点, 通常用来查看历史版本.
 
