@@ -94,6 +94,11 @@ $ chgrp [OPTION]... GROUP FILE...
 | <  | 优先级较高  |
 | N  | 优先级较低  |
 
+- 自定义输出格式
+```
+$ ps -A -o pid,cmd
+```
+
 
 #### kill
 * 用于发送`指定信号`到`指定进程`
@@ -648,8 +653,13 @@ sudo passwd root
 ```
 
 
-## mount & umount
+## mount & sshfs & umount
+```
+$ mount /dev/sdb1 /mnt/sdb1 # 挂载磁盘
+$ umount /mnt/sdb1 # 卸载目录
 
+$ sshfs user@hostname:/remote/path /local/path # 将远端的目录挂载到本地, umount卸载
+```
 
 
 ## rz & sz
