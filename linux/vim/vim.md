@@ -11,7 +11,7 @@ $ vim filename +/pattern   # 打开文档时跳到第一个匹配的词
  * vim-tagbar             tag显示列表
  * ctrlp.vim              模拟sublime的ctrl-p快捷键，支持模糊搜索打开文件
  * ctrlp-cmatcher         对ctrlp.vim模糊搜索算法改进的插件
- * delimitMate            <(["等括号自动补全插件（模拟sublime）
+ * delimitMate            `<(["`等括号自动补全插件（模拟sublime）
  * vim-surround           快速修改括号的插件 例：<abc> 变为 (abc) 或 "abc"
  * vim-commentary         批量注释的插件
  * vim-easymotion         快速跳转光标的插件
@@ -102,7 +102,14 @@ Ctrl+q 解锁
 | . | `重复`最后一条修改正文的命令 |
 | 排版 | . |
 | <<,>> | 向左,右缩进一个shiftwidth |
-
+| 折叠 |   |
+| :set fdm=syntax | 设置折叠方式(fdm: foldingmethod) |
+| zc | 关闭折叠点(close) |
+| zo | 打开折叠点(ope) |
+| zC | 关闭`嵌套的`折叠点 |
+| zO | 打开`嵌套的`折叠点 |
+| zM | 关闭文档中所有折叠点 |
+| zR | 打开文档中所有折叠点 |
 
 #### 命令模式
 
