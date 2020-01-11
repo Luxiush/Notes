@@ -12,8 +12,15 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set laststatus=2
+
 set incsearch
 set hlsearch
+" ignore case search
+set ignorecase
+
+set wrap
+" don't wrap inside word
+set linebreak
 
 set completeopt=preview,menu
 
@@ -36,3 +43,13 @@ autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
+
+" replace Tab with '>-', and Trailing spaces with '-'
+set list
+set listchars=tab:»·
+
+" persistent undo
+set undofile
+set undodir=$HOME/.vim/undo
+set undolevels=1000
+set undoreload=1000
