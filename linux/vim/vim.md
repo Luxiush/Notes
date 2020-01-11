@@ -153,6 +153,8 @@ Ctrl+q 解锁
 | :tabs | 查看所有tab列表, ngt跳转到第n个tab |
 | gt(:tabp) | 前一个tab |
 | gT(:tabn) | 下一个tab |
+| gf | 打开光标所在处的文件 |
+| Ctrl-w-gf | 在新tab中打开文件 |
 | 目录 | . |
 | :E, :Ve, Se | 打开目录 |
 | 标记 | . |
@@ -163,7 +165,7 @@ Ctrl+q 解锁
 | \`a, \`b, \`z | 回到标记位置 |
 | 缓冲区(buffers) | .  |
 | buffers | 查看缓冲区 |
-| b[n] | 切换到第[n]个缓冲区 | 
+| b[n] | 切换到第[n]个缓冲区 |
 | ctrl+^ | 在最近两个缓冲区间切换 |
 | ctrl+i,o | go back, go forward |
 
