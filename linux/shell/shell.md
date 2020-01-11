@@ -60,6 +60,17 @@ $ chgrp [OPTION]... GROUP FILE...
 |:---|:---|
 | -R | recursively |
 
+#### sudo
+- 以另一个用户的身份执行命令
+| . | . |
+|:---|:---|
+| -i |   |
+| -S | 把输入密码的提示信息重定向到stderr, 然后从stdin读入密码 |
+
+
+```
+echo "password" | sudo -S apt-get install .....
+```
 
 ### 系统信息
 - /proc/ 目录
@@ -240,6 +251,26 @@ $ sort <options> <file>
 $ sort <file_in> | uniq > <file_out>
 ```
 
+## tr
+- 字符替换, 或删除特定的字符
+
+```
+$ echo "hello world" | tr 'a-z' 'A-Z' # 转为大写
+HELLO WORLD
+
+$ echo "hello 123world" | tr -d '0-9' # 删除数字
+hello world
+
+$ echo "hellllllllo worrrrrrld" | tr -s 'lr' # 压缩连续的重复字符
+helo world
+```
+
+## tee
+- 重定向到文件, 同时输出到屏幕
+```
+$ echo "hello world" | tee log.txt
+```
+
 ## cut
 从输入文件中提取每行的特定部分
 ```
@@ -312,7 +343,7 @@ drwxr-xr-x 2 root    root    4096 Nov 26  2016 plymouth
 
 #### 属性(1+9):
 - 类型(1): `-`表示普通文件, `d`表示目录, `l`表示软链接
-- 权限(9): rwx(Owner)r-x(Group)r-x(Other)
+- 权限(9): rwx(Owner)r-x(Group)r-x(Other) 对应八进制数
 
 #### 硬链接数
 - 目录的硬链接数等于目录中的子目录数量加2(.和..).
@@ -439,7 +470,7 @@ $ whereis <options> <directory> <filename>
 | -M | 指定帮助文档的搜索路径 |
 
 
-## nohup
+## nohup (no hang up)
 nohup命令可以将程序以忽略挂起信号的方式运行起来，被运行的程序的输出信息将不会显示到终端.
 ```
 $ nohup <command> &
@@ -660,6 +691,13 @@ $ umount /mnt/sdb1 # 卸载目录
 
 $ sshfs user@hostname:/remote/path /local/path # 将远端的目录挂载到本地, umount卸载
 ```
+
+
+## objdump
+> Display information from object files.
+
+## strace
+> Trace system calls and signals.
 
 
 ## rz & sz
