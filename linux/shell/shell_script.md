@@ -11,6 +11,9 @@ done
 
 ### 变量
 
+#### 变量声明
+
+
 #### 字符串
 单引号:
 - 单引号里的任何字符都会`原样输出`，单引号字符串中的变量是无效的
@@ -29,6 +32,15 @@ echo ${#string} # 4
 # 提前子字符串
 echo ${string:1:4} # bcde
 
+# 提取最后几个字符
+echo ${string: -3} # dfg
+
+# 字符串查找替换
+FILE="example.tar.gz"
+echo "${FILE%%.*}"     # 取头: example
+echo "${FILE%.*}"      # 去尾: example.tar
+echo "${FILE#*.}"      # 去头: tar.gz
+echo "${FILE##*.}"     # 取尾: gz
 ```
 
 #### 数组
