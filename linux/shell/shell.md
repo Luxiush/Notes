@@ -62,11 +62,11 @@ $ chgrp [OPTION]... GROUP FILE...
 
 #### sudo
 - 以另一个用户的身份执行命令
+
 | . | . |
 |:---|:---|
-| -i |   |
+| -i | . |
 | -S | 把输入密码的提示信息重定向到stderr, 然后从stdin读入密码 |
-
 
 ```
 echo "password" | sudo -S apt-get install .....
@@ -778,4 +778,22 @@ ntpd # 启动ntp守护进程,自动同步时间
 
 ### route
 
-.
+## ssh
+- 系统级配置文件 /etc/ssh/sshd_config
+- 生成密钥对
+```
+$ ssh-keygen -t rsa
+```
+
+### 公钥登录
+- 修改配置文件将`AuthorizedKeyFile`的值置为 `./ssh/authorized_keys`
+- 将本地的公钥文件`~/.ssh/id_rsa.pub`，重定向追加到远程文件`~/.ssh/authorized_keys`
+- 远程登录
+```
+$ ssh user@host
+```
+
+### scp
+```
+$ scp local/path user@host:remote/path
+```
