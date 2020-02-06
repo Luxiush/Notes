@@ -470,11 +470,25 @@ $ whereis <options> <directory> <filename>
 | -M | 指定帮助文档的搜索路径 |
 
 
-## nohup (no hang up)
-nohup命令可以将程序以忽略挂起信号的方式运行起来，被运行的程序的输出信息将不会显示到终端.
+## nohup (no hangup)
+- 忽略hangup信号`SIGHUP`
+- 普通的后台进程, 其父进程还是当前终端shell的进程, 而一旦父进程退出, 则会发送hangup信号给所有子进程, 子进程收到hangup以后也会退出. 因此如果我们要在退出shell的时候继续运行进程, 则需要使用nohup让提交的命令忽略hangup信号.
 ```
 $ nohup <command> &
 ```
+
+
+## setsid
+> run a program in a new session
+
+
+## jobs, fg, bg, &
+- jobs: 查看在后台运行的任务, 加`-l`参数显示`PID`
+- ctrl-z: 暂停正在前台执行的任务并放到后台
+- bg <jobnum>: 继续后台执行暂停的任务
+- fg <jobnum>: 将后台任务调到前台继续执行
+- &: 将命令放到后台执行
+
 
 ## [crontab]( http://www.cnblogs.com/peida/archive/2013/01/08/2850483.html )
 设置定时任务
