@@ -411,26 +411,121 @@ $ find . -type f -print | xargs -i cp {} /usr/      # -i 选项后，xargs将匹
 ```
 
 
-## 重定向
-* 输出重定向(>, >>)
+---
+
+## i/o重定向
+- 在linux中会为每一个进程维护一个文件描述表(fdtable)，可以在/proc/pidNum/fd中查看，fd通常为数字0~9。 
+- 每个进程会默认打开三个fd: 0(标准输入), 1(标准输出), 2(错误输出)
+- 所以所谓的重定向, 无外乎就是把这三fd绑到其他文件/设备.
+
+
+### 常用操作
 ```
-$ cat > <file>.out    
+>   : 写重定向
+<   : 读重定向
+>>  : 追加输出
+<<  : 从stdin读入
+<<< : 直接将一个字符串重定向给输入
 ```
 
-* 输入重定向(<, <<)
+- 例:
 ```
-$ cat > <file>.out < <file>.in
+$ cat test.txt > test.out   # >
+$ cat test.tet >> test.out  # >>
+
+$ cat < test.in             # <
+hello world
+
+$ cat < test.in > test.out
+
+$ base64 << EOF             # <<
+> hello world
+> EOF
+aGVsbG8gd29ybGQK
+
+$ base64 <<< hello          # <<< 直接将一个字符串重定向给输入, base64命令参数只接受文件，通过这种方式就可以把字符串直接传给它。
+aGVsbG8K
+
 ```
 
-每个 Unix/Linux 命令运行时都会打开三个文件: 0 标准输入（STDIN），1 标准输出（STDOUT），2 标准错误输出（STDERR）。
+### "骚"操作
+
+- fd之间的相互赋值:
 ```
-$ command 2> file  # 将STDERR重定向
-$ command > file 2>&1  # 将STDERR和STDOUT合并后重定向
-$ n >& m	# 将输出文件 m 和 n 合并
-$ command > /dev/null  # 屏蔽输出
+$ ./test.sh m>&n        # 重定向绑定，将fdm重定向到fdn,    从fdtable的角度来看, 其实也就是一个赋值操作而已
+$ ./test.sh 2>&1        # 将stderr重定向到stdout
+
+$ ./test.sh > test.txt 2>&1     # 先将fd1重定向到test.txt, 再将fd2重定向到fd1, shell是从左往右解析的
+
+$ (./test_sleep.sh 120 > test.txt 2>&1)&
+[1] 57719
+
+$ ll /proc/57719/fd/
+total 0
+dr-x------ 2 snail snail  0 Feb 27 08:21 ./
+dr-xr-xr-x 9 snail snail  0 Feb 27 08:21 ../
+lrwx------ 1 snail snail 64 Feb 27 08:21 0 -> /dev/pts/18
+l-wx------ 1 snail snail 64 Feb 27 08:21 1 -> /home/snail/workspace/test.txt        # fd2和fd1都被重定向了
+l-wx------ 1 snail snail 64 Feb 27 08:21 2 -> /home/snail/workspace/test.txt
+lr-x------ 1 snail snail 64 Feb 27 08:21 255 -> /home/snail/workspace/test_sleep.sh*
+
+$ ./filename.sh 2>&1 > test.txt     # 先将fd2重定向到fd1, 再将fd1重定向到test.txt
+
+$ (./test_sleep.sh 120 2>&1 > test.txt)&
+[1] 57813
+
+snail@snail-vm:~/workspace
+$ ll /proc/57813/fd/
+total 0
+dr-x------ 2 snail snail  0 Feb 27 08:27 ./
+dr-xr-xr-x 9 snail snail  0 Feb 27 08:27 ../
+lrwx------ 1 snail snail 64 Feb 27 08:27 0 -> /dev/pts/18
+l-wx------ 1 snail snail 64 Feb 27 08:27 1 -> /home/snail/workspace/test.txt        # 只有fd1被重定向了
+l-wx------ 1 snail snail 64 Feb 27 08:27 2 -> /dev/pts/18
+lr-x------ 1 snail snail 64 Feb 27 08:27 255 -> /home/snail/workspace/test_sleep.sh*
+
 ```
 
-* 管道(|)
+### exec, 永久性重定向
+- 一般情况下, 重定向只是对当前命令有效, 通过`exec`可以将整个脚本中后续的命令都进行重定向
+
+```
+$ exec 3> test.txt          # 以`写`的方式打开test.txt, 并分配fd3
+$ exec 4< test.txt          # 以`读`的方式打开test.txt, 并分配fd4
+$ exec 5<> test.txt         # 以`读写`的方式打开test.txt, 并分配给fd5.
+
+$ ll /dev/fd/
+l-wx------ 1 snail snail 64 Feb 26 08:19 3 -> /home/snail/workspace/test.txt    # l-wx 写
+lr-x------ 1 snail snail 64 Feb 26 08:19 4 -> /home/snail/workspace/test.txt    # lr-x 读
+lrwx------ 1 snail snail 64 Feb 26 08:19 5 -> /home/snail/workspace/test.txt    # lrwx 读写
+
+$ exec 9>&3                 # 把fd3赋给fd9
+
+$ ll /dev/fd/
+l-wx------ 1 snail snail 64 Feb 27 07:54 3 -> /home/snail/workspace/test.txt    # l-wx
+l-wx------ 1 snail snail 64 Feb 27 07:54 9 -> /home/snail/workspace/test.txt    # l-wx
+
+$ exec 9<&3                 # `<` 和 `>` 一样 ??
+
+$ ll /dev/fd/
+l-wx------ 1 snail snail 64 Feb 27 07:54 3 -> /home/snail/workspace/test.txt    # l-wx
+l-wx------ 1 snail snail 64 Feb 27 07:54 9 -> /home/snail/workspace/test.txt    # l-wx
+
+$ exec n<&-                 # 将fdn置空, 即关闭fdn, 关闭`读`
+$ exec n>&-                 # 关闭fdn的`写`
+```
+
+### 代码块重定向
+- 对if/then, while, for等代码块的重定向
+
+```
+while read line; do
+    echo $line
+done < filename.txt
+```
+
+---
+## 管道(|)
 ```
 $ <command_1> | <command_2>
 ```
@@ -456,7 +551,7 @@ $ wc <options> <filename>
 ## whereis
 * 只能用于程序名的搜索
 ```
-$ whereis <options> <directory> <filename>                       
+$ whereis <options> <directory> <filename>
 ```
 常用参数
 
