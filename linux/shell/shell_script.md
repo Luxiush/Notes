@@ -1,4 +1,29 @@
 ## Shell Script
+- See [Advanced Bash-Scripting Guide]( https://www.tldp.org/LDP/abs/html/ ) for more information
+
+### shel调用调用脚本的几种方式
+#### 1. fork
+- 默认, 生成一个子进程去执行, 但是父进程会等子进程执行完成后再继续
+```
+./filename.sh
+
+/bin/bash ./filename.sh
+```
+
+#### 2. source
+- 在当前进程中执行脚本中的命令(类似于`c`里面的`include`), pid不变, 环境变量也会继承.
+
+- 例: 
+```
+$ source <file_name>
+$ . <file_name>
+```
+
+#### 3. exec
+- 替换当前进程的镜像, pid不变, 但是环境环境变量会重置.
+- 新脚本执行完后直接退出, 不再返回exec调用的地方
+- (除此之外, exec还可以用于io重定向)
+
 
 ```shell
 files=`ls -a`   # 数组
@@ -9,9 +34,52 @@ done
 
 ```
 
-### 变量
+### 关于子shell
+- 执行外部命令时会创建子shell, 内部命令则不会
+- 外部命令: 用户自定义脚本, 系统的可执行文件比如`/bin/`目录下的
+- 内部命令: shell自己的一些`语句`, 如: for, let, shift等.
 
-#### 变量声明
+- `$BASH_SUBSHELL`: 查看从当前进程开始的子shell层数
+- `$BASHPID`: 当前所处bash的pid
+
+
+### 多进程
+- `(cmd1)`, 将一组cmd放到子shell中执行, 会继承父shell打开的文件(fdtable)
+- `cmd&`, 将cmd放到后台去执行
+- `jobs`, 查看当前的各个任务
+- `fg [jobid]`, 将jobid放到前台执行
+- `bg [jobid]`, 将jobid放到后台执行
+- `ctrl-z`, 暂停当前job
+
+
+#### 多进程并发
+##### 方案1: fifo
+- [multiprocess.sh]( ./demo/multiprocess.sh )
+- [multiprocess2.sh]( ./demo/multiprocess.sh )
+
+##### 方案2: xargs -p
+
+
+##### 方案3: pallel
+- 略
+
+
+
+---
+### 变量
+#### 变量的作用域
+- 全局变量, **默认**, 只能在当前shell进程中使用
+- 局部变量, local, 只能在函数内部使用
+- 环境变量, export, 在子进程中还可以使用
+- unset, 取消某个变量
+
+```
+var="global"
+local var_local="local"
+export var_env="env"
+```
+
+- shell定义的变量默认为全局变量, 这就意味着, 在函数里面定义的变量出了函数还可以访问.
 
 
 #### 字符串
@@ -23,7 +91,7 @@ done
 - 双引号里可以有变量
 - 双引号里可以出现转义字符
 
-```shell
+```
 string="abcdefg"
 
 # 获取字符串长度
@@ -139,6 +207,38 @@ printf "%-10s %-8s %-4.2f\n" 郭芙 女 47.9876
 
 ```
 
+#### seq
+- 用于生成序列
+```
+$ seq [last]
+$ seq [first] [last]
+$ seq [first] [increment] [last]
+
+```
+
+- 例:
+```
+for i in $(seq 10); do
+    echo "hello $i" # 1 2 3 4 5 6 7 8 9 10
+done
+```
+
+#### shift
+- 将整个参数列列表左移
+```
+function test_shift()
+{
+    echo "before shift: $*"
+    shift 2                 # shift [n], 整个参数列表左移n位
+    echo "after shift: $*"
+
+    # $ test_shift a b c d
+    # before shift: a b c d
+    # after shift: c d
+}
+```
+
+---
 
 ### 基本语句
 #### if-else
@@ -151,7 +251,7 @@ for((i=0;i<10;i++)); do
     echo -e "$i\t\c"
 done
 
-###
+
 arr=(aa bb cc dd)
 for s in $arr; do
     echo -e "$s\t\c"
@@ -182,6 +282,16 @@ case $aNum in
     *)  echo '你没有输入 1 到 4 之间的数字'
     ;;
 esac
+```
+
+#### 函数
+```
+function func()
+{
+    echo $*
+}
+
+func aa bb cc
 ```
 
 .
