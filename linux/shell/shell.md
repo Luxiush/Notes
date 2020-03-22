@@ -649,8 +649,13 @@ $ sudo update-alternatives --install /usr/bin/java java /opt/java/jdk1.6.0_27/bi
 - disk usage
 
 ## 添加新硬盘
-创建分区 => 格式化(创建文件系统) => 挂载
-fdisk   => mkfs             => mount
+创建分区 => 格式化(创建文件系统) => 挂载(或配置永久挂载)
+fdisk   => mkfs             => mount(/etc/fstab)
+```
+$ fdisk /dev/sdc
+$ mkfs.ext4 /dev/sdc
+$ mount /dev/sdc /mnt/data
+```
 
 
 ## [free]( https://www.cnblogs.com/coldplayerest/archive/2010/02/20/1669949.html )
