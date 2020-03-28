@@ -86,7 +86,7 @@ lrwxrwxrwx 1 root root 15 Sep 16 07:54 /dev/stderr -> /proc/self/fd/2
 
 
 #### `/proc/keys`, `/proc/keys-user`
-- 关于linux的keyrings: TODO
+- 关于linux的keyrings(钥匙环), 用于保存一些身份验证数据(比如: 网站的密码, 安全证书), 并对外提供了一套api方便应用程序使用.
 
 
 #### `/proc/meminfo`
