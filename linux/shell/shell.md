@@ -30,8 +30,21 @@ $tar -cf out.tar.gz in
 ### 用户/组管理
 linux 添加/删除用户和组: <http://www.cnblogs.com/xd502djj/archive/2011/11/23/2260094.html>
 #### 相关配置文件
-- /etc/passwd: 用户的配置文件
-- /etc/shadow: 用户影子口令文件
+- /etc/passwd: 用户账号的配置文件
+```
+Format  : [username]:[password]:[uid]:[gid]:[comment]:[home directory]:[login shell]
+    - password: x表示暗文密码, 空表示无密码
+    - home directory: 用户的home目录
+    - login shell: 用户登录后需要一个启动一个进程负责就将用户的操作传给内核 (`/usr/sbin/nologin`表示不允许登录)
+Example : root:x:0:0:root:/root:/bin/bash
+From    : `$ man`
+```
+- /etc/shadow: /etc/passwd的影子, 用于保存和账号密码相关的信息
+```
+Format  : [login name]:[encrypted password]:......
+Example : root:!:18294:0:99999:7:::
+From    : `$ man shadow`
+```
 - /etc/group: 组配置文件  (格式: 组名:密码:id:组成员)
 - /etc/gshadow: 组影子文件
 - /etc/skel: 一般是存放用户启动文件的目录，这个目录是由root权限控制，当我们添加用户时，这个目录下的文件自动复制到新添加的用户的HOME目录下；/etc/skel 目录下的文件都是隐藏文件，也就是类似.file格式的；我们可通过修改、添加、删除/etc/skel目录下的文件，来为用户提供一个统一、标准的、默认的用户环境；
@@ -39,6 +52,7 @@ linux 添加/删除用户和组: <http://www.cnblogs.com/xd502djj/archive/2011/1
 添加用户: adduser
 > By default, each user in Debian GNU/Linux  is  given  a  corresponding  group  with  the  same  name.
 
+添加组: addgroup
 
 #### 改变文件所有者/所属组
 * chown
@@ -174,7 +188,7 @@ $ grep -vwf file1 file2 # 统计file1中没有，file2中有的行
 ```
 
 
-## 文空查看命令
+## 文件查看命令
 
 ### head
 * 显示文档开头
@@ -345,11 +359,23 @@ drwxr-xr-x 2 root    root    4096 Nov 26  2016 plymouth
 - 类型(1): `-`表示普通文件, `d`表示目录, `l`表示软链接
 - 权限(9): rwx(Owner)r-x(Group)r-x(Other) 对应八进制数
 
+##### 文件权限:
+- r(read), w(write), x(execute)
+
+- s(set):
+```
+Set user or group id on execution.
+即, 运行的时候自动把程序的UID(GID)设为文件所属的UID(GID)
+```
 #### 硬链接数
 - 目录的硬链接数等于目录中的子目录数量加2(.和..).
 - 每个目录都会保存一个其父目录的硬链接
 
 - 每创建一个目录, 在其父目录中会新增一个目录项, 用于将子目录的名称和子目录的inode关联起来. 同时, 新的目录中也会自动创建两个目录项, 分别将"..","."和父目录,当前目录关联起来.
+
+## chmod
+- 改变文件权限, 详见`$ man chmod`
+
 
 ## ln
 - 创建链接
@@ -414,7 +440,7 @@ $ find . -type f -print | xargs -i cp {} /usr/      # -i 选项后，xargs将匹
 ---
 
 ## i/o重定向
-- 在linux中会为每一个进程维护一个文件描述表(fdtable)，可以在/proc/pidNum/fd中查看，fd通常为数字0~9。 
+- 在linux中会为每一个进程维护一个文件描述表(fdtable)，可以在/proc/pidNum/fd中查看，fd通常为数字0~9。
 - 每个进程会默认打开三个fd: 0(标准输入), 1(标准输出), 2(错误输出)
 - 所以所谓的重定向, 无外乎就是把这三fd绑到其他文件/设备.
 
@@ -809,6 +835,11 @@ $ sshfs user@hostname:/remote/path /local/path # 将远端的目录挂载到本�
 
 ## objdump
 > Display information from object files.
+
+## ldd
+> print shared object dependencies.
+
+- 显示程序所依赖的动态库
 
 ## strace
 > Trace system calls and signals.
