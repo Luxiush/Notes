@@ -37,8 +37,11 @@ $ git checkout <commit_id>                  # 切出指定版本
 ### Index --> Repository
 ```shell
 $ git commit -m "[message]"
-$ git commit <file1><file2> -m "[message]"  # 提交指定文件
-$ git commit -a     #提交工作区自上次commit之后的变化到仓库区
+$ git commit <file1><file2> -m "[message]"   # 提交指定文件
+$ git commit -a                              #提交工作区自上次commit之后的变化到仓库区
+$ git commit -e                              # 打开关联的editor来输入提交信息
+$ git commit --amend                         # 修改最近一次提交
+$ git commit --amend --no-edit               # 不修改log信息
 ```
 
 ### Repository ==> Index
@@ -105,8 +108,9 @@ $ git merge <branchName>                # 合并指定分支到当前分支
 - merge是将两个分支的提交点按时间顺序重新排列，而rebase则是将两个分支进行拼接。
 - merge与rebase都能得到相同的结果。
 ```
-git pull --rebase                       # 相当于先fetch再rebase
-git rebase <branchName>                 # 合并指定分支到当前分支
+$ git pull --rebase                      # 相当于先fetch再rebase
+$ git rebase <branchName>                # 合并指定分支到当前分支
+$ git rebase -i HEAD~[n]
 ```
 
 ### git diff
@@ -125,14 +129,15 @@ $ git status -s                          # 查看index简略信息
 ### git log
 查看提交记录
 ```
-$ git log [--graph]                      # 查看commit_id
 # git log -[n]                           # 查看最近n调记录
+$ git log --name-only                    # 只显示改动的文件名
+$ git log --name-status                  # 显示文件的改动状态
+$ git log --grep <patten>                # 查找log信息
+
+$ git log [--graph]                      # 查看commit_id
 $ git log -p <filename>                  # 显示某个文件每次更改的diff信息
 $ git log --oneline <filename>           # 查看某个文件的修改历史
 $ git log --oneline                      # 查看log简略信息
-$ git log --name-only                    # 显示改动的文件
-$ git log --name-status                  # 显示文件的改动状态
-$ git log --grep <patten>                # 查找log信息
 $ git log --reverse                      # 将log倒序输出
 ```
 
@@ -153,18 +158,33 @@ $ git clean                              # 清除所有不在git仓库中的文�
 
 ---
 ## 补丁
-### diff&&apply
+### diff && apply
 <https://stackoverflow.com/questions/17152171/git-cannot-apply-binary-patch-without-full-index-line>
+
 ```
-$ git diff --binary > <filename>        # 根据diff生成补丁文件
-$ git apply --check <filename>	        # 应用之前检查补丁是否可以应用
-$ git apply <filename>                  # 应用补丁文件
+$ git diff --binary                      # output a binary diff that can be applied with git-apply
+
+$ git apply <file-name>                  # 应用补丁
+$ git apply --check <filename>	         # 应用之前检查补丁是否可以应用
+$ git apply --reject <file-name>         # 自动合入patch中不冲突的代码改动，同时保留冲突的部分
+$ git apply -3 <file-name>               # (3way) 应用失败时使用三方合并.
 ```
 
-### chery-pick
-- 把另一个分支的一个或几个提交应用到当前分支
+### format-patch && am
 ```
-$ git chery-pick <commit_id1> <commit_id2>
+$ git format-patch -[n]                  # 生成最近n条记录的补丁, 带有commit记录信息, 每个commit对应一个.patch文件.
+$ git formt-patch -[n] -o <dir_out>      # 指定补丁的输出目录
+$ git format-patch -[n] <commit_id>      # 生成从<commit_id>往前n条记录的补丁(包括<commit_id>), 从<commit_id>~[n-1]到<commit_id>
+$ git format-patch <commit-id-since>..<commit-id-until> # 左开右闭区间
+
+$ git am <file-name.patch>               # 应用补丁,保留提交信息, 如果应用失败, 先`git apply`手动应用补丁再`git am --continue`即可.
+```
+
+## cherry-pick
+把另一个分支的一个或几个提交应用到当前分支
+```
+$ git chery-pick <commit-id>
+$ git chery-pick <commit-id-since>..<commit-id-until> # 左开右闭区间
 ```
 
 ---
